@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-13T15:32:14Z",
+  "lastChecked": "2026-10-13T19:08:12Z",
   "races": [
     {
       "id": "jarrow-10k-2026",
@@ -17,21 +17,6 @@
       "updated": "2026-10-13"
     },
     {
-      "id": "fulham-10k-2026",
-      "name": "Fulham 10K (Top Flight)",
-      "date": "2026-11-15",
-      "venue": "Eel Brook Common, London SW6",
-      "distances": [
-        "10k"
-      ],
-      "status": "act",
-      "statusText": "Elite (sub-30) free · reduced-fee wave entry",
-      "url": "https://www.topflightraces.com/fulham-10k-2/",
-      "why": "Closed-road, flat London 10K with a competitive front wave. Wave entry via OpenTrack code by email.",
-      "firstSeen": "2026-10-05",
-      "updated": "2026-10-05"
-    },
-    {
       "id": "brighton-10k-2026",
       "name": "Brighton 10K",
       "date": "2026-11-15",
@@ -45,6 +30,21 @@
       "why": "Flat seafront out-and-back with a quick front end – one of the South East's best 10K PB courses.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
+    },
+    {
+      "id": "fulham-10k-2026",
+      "name": "Fulham 10K (Top Flight)",
+      "date": "2026-11-15",
+      "venue": "Eel Brook Common, London SW6",
+      "distances": [
+        "10k"
+      ],
+      "status": "act",
+      "statusText": "Elite (sub-30) free · reduced-fee wave entry",
+      "url": "https://www.topflightraces.com/fulham-10k-2/",
+      "why": "Closed-road, flat London 10K with a competitive front wave. Wave entry via OpenTrack code by email.",
+      "firstSeen": "2026-10-05",
+      "updated": "2026-10-05"
     },
     {
       "id": "fnul-nov-2026",

@@ -213,6 +213,24 @@
       "url": "https://data.opentrack.run/",
       "notes": "Entry platform used by many graded meets.",
       "howToCheck": "Plain fetches often fail. Search results linking to data.opentrack.run/x/<year>/GBR/<code>/ are the best way to find competition codes."
+    },
+    {
+      "id": "ranelagh-harriers",
+      "name": "Ranelagh Harriers",
+      "group": "organiser",
+      "status": "new",
+      "url": "https://ranelagh-harriers.co.uk/",
+      "notes": "Richmond club staging the Sunset Sprint 3K (July), Ranelagh 10K (June) and Ranelagh Half (May) along the Thames at Ham.",
+      "howToCheck": "Approved by the owner. Race pages: /sunset-sprint (3K, flat out-and-back, Friday evening in July, date TBC), /ranelagh-10k (flat two-lap road and towpath, 20 Jun 2027 TBC), /ranelagh-half (road and towpath to Kingston Bridge and back, 9 May 2027, entries opening soon). Entries via in.njuko.com. Contact: events@ranelagh-harriers.co.uk. The 5-mile Page Cup is cross-country and members-only, so exclude it."
+    },
+    {
+      "id": "paddock-wood-half",
+      "name": "Paddock Wood Half Marathon",
+      "group": "course",
+      "status": "new",
+      "url": "https://www.paddockwoodhalfmarathon.co.uk/",
+      "notes": "Fast, accurately measured Kent half marathon with pacers, run under a UKA licence. Next edition Sun 14 Mar 2027.",
+      "howToCheck": "Approved by the owner. Entries open via Enthuse: https://register.enthuse.com/ps/event/PaddockWoodHalfMarathon2027. Organised by Paddock Wood AC; race queries to info@sportsystems.co.uk."
     }
   ]
 }

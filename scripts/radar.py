@@ -32,7 +32,7 @@ SOURCE_GROUPS = ("organiser", "course", "listing")
 SOURCE_STATUSES = ("listing", "quiet", "new", "suggested")
 RACE_FIELDS = ("id", "name", "date", "venue", "distances", "status", "statusText",
                "url", "why", "firstSeen", "updated")
-OPTIONAL_RACE_FIELDS = ("waitlistEmail",)
+OPTIONAL_RACE_FIELDS = ("contactEmail", "contactLabel")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
@@ -106,8 +106,13 @@ def validate_radar(data):
         for k in ("name", "venue", "statusText", "why"):
             if k in r and (not isinstance(r[k], str) or not r[k].strip()):
                 errs.append("%s: %s must be a non-empty string" % (where, k))
-        if "waitlistEmail" in r and not (isinstance(r["waitlistEmail"], str) and EMAIL_RE.match(r["waitlistEmail"])):
-            errs.append(where + ": waitlistEmail must be an email address")
+        if "contactEmail" in r and not (isinstance(r["contactEmail"], str) and EMAIL_RE.match(r["contactEmail"])):
+            errs.append(where + ": contactEmail must be an email address")
+        if "contactLabel" in r:
+            if "contactEmail" not in r:
+                errs.append(where + ": contactLabel needs a contactEmail")
+            if not isinstance(r["contactLabel"], str) or not r["contactLabel"].strip() or len(r["contactLabel"]) > 80:
+                errs.append(where + ": contactLabel must be a short non-empty string (max 80 chars)")
     return errs
 
 

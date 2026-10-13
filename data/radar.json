@@ -70,11 +70,13 @@
         "5k"
       ],
       "status": "open",
-      "statusText": "Open to sub-15:30 men / sub-18:00 women (elite races) only",
+      "statusText": "Open to sub-16:15 men / sub-19:15 women via OpenTrack · elite races (sub-14:00 / sub-16:10) by email",
       "url": "https://data.opentrack.run/en-gb/x/2026/GBR/fnulnov26/",
       "why": "Flat two-lap evening 5K in Battersea Park with seeded waves – only the elite races still have places.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-10-13",
+      "contactEmail": "ben@bennoadcoaching.com",
+      "contactLabel": "Elite races (sub-14:00 men / sub-16:10 women)"
     },
     {
       "id": "abbey-dash-2026",

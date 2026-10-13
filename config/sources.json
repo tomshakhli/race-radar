@@ -59,7 +59,7 @@
       "status": "listing",
       "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php",
       "notes": "Seeded evening 5Ks in Battersea Park. Dates through March 2027 are on the board.",
-      "howToCheck": "Use event-details.php, not the homepage: it lists dates and OpenTrack RSVP links. data.opentrack.run comp pages often fail to fetch. The 18 Dec 2026 Christmas 5 Miler is 5 miles, outside our distance list, so it is not on the board."
+      "howToCheck": "Use event-details.php, not the homepage: it lists dates and OpenTrack RSVP links. data.opentrack.run comp pages often fail to fetch. The 18 Dec 2026 Christmas 5 Miler is 5 miles, outside our distance list, so it is not on the board. Each race's OpenTrack page (e.g. https://data.opentrack.run/en-gb/x/2026/GBR/fnulnov26/) has the current entry standards and the elite-entry email, which is hidden: run scripts/page_emails.py on it. Prefer OpenTrack's standards over the FNUL site's if they differ."
     },
     {
       "id": "tracksmith-twilight",
@@ -85,8 +85,8 @@
       "group": "organiser",
       "status": "listing",
       "url": "https://bmaf.org.uk/fixtures/",
-      "notes": "UK track, road and indoor championships, mile to half marathon. Masters age groups only.",
-      "howToCheck": "Fixtures page shows 'Entries Full' and 'Advance Notice' statuses. bmaf.opentrack.run errors. Checked 13 Oct 2026: the 29 Nov 5K road champs are Entries Full; Cardiff (23 Jan), Glasgow (20-21 Feb) and Winter Throws (6-7 Mar) are Advance Notice."
+      "notes": "UK masters championships on track, road and indoors, mile/1500m to 10K only. Open to athletes aged 35 and over.",
+      "howToCheck": "Restricted by the owner: only fixtures held in the UK (England, Scotland, Wales, Northern Ireland), and only running events from mile/1500m to 10K (track 1500m/mile, 3000m, 5000m, 10,000m; road mile, 5K, 10K). Skip cross-country, throws, multi-events, half marathons, marathons, off-road/mountain, and every overseas championship (World/European Masters, British & Irish international). For indoor meets, list only the 1500m/mile and 3000m. Each fixture links to its OpenTrack page (bmaf.opentrack.run/en-gb/x/<year>/GBR/<code>/), which has entry status and waitlist contacts; addresses there are hidden, so run scripts/page_emails.py on it. Checked 13 Oct 2026: 29 Nov 5K road champs Entries Full, waiting list via the OpenTrack page (https://bmaf.opentrack.run/en-gb/x/2026/GBR/bmaf-5k/); Cardiff 23 Jan (3000m) and Glasgow 20-21 Feb indoor champs are Advance Notice."
     },
     {
       "id": "night-of-10k-pbs",

@@ -31,7 +31,7 @@ Follow `criteria` in `config/sources.json`. Also:
   - `open`: entries are open.
   - `announced`: dated, but entries aren't open yet.
   - `closed`: sold out or closed. Keep the race on the board.
-- **Waitlist:** if a sold-out race has a waitlist and the organiser lists an email address to contact for it, set `waitlistEmail` to that address. Only use an address published by the organiser for this purpose. Otherwise leave the field out.
+- **Contact email:** if the organiser publishes an email address for getting a place (a waitlist, elite or invitational entry, entry by request, or transfers), set `contactEmail` to it and `contactLabel` to a few words saying what it's for, e.g. `"Waitlist"` or `"Elite races (sub-14:00 men / sub-16:10 women)"`. Check the race's info and entry pages (including its OpenTrack page) for these, not just the listing. Many pages hide addresses as "[email protected]", which WebFetch can't read: run `python3 scripts/page_emails.py <url>` on the race's entry page to reveal every address with the text around it, and only use an address whose surrounding text says it's for places, a waitlist or entries. Don't use general "get in touch" addresses. If there's no such address, leave both fields out.
 - **Existing race:** change `status`/`statusText` only on a material change. Leave every other race exactly as it is.
 - Don't touch `lastChecked`.
 
@@ -41,6 +41,7 @@ Follow `criteria` in `config/sources.json`. Also:
 - Update `howToCheck` with anything that will help tomorrow's run, such as working URLs, blocked pages or OpenTrack codes.
 - If you find a new organiser or listing worth checking daily, add it with `status: "new"` or `"listing"`.
 - Don't change `criteria`, `groups`, `suggestFormUrl` or any `suggested` source.
+- Some sources narrow the criteria in their `howToCheck` (for example, distances or countries). Follow those restrictions for races from that source.
 
 ## Rules
 

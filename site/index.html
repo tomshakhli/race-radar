@@ -85,8 +85,8 @@ h2 .count { font-family: var(--mono); font-size: 13px; color: var(--muted); font
 .pill.announced, .pill.new-src { background: var(--soon-soft); color: var(--soon); }
 .pill.closed, .pill.quiet { background: var(--closed-soft); color: var(--closed); }
 .pill.new, .pill.suggested { background: transparent; color: var(--tartan); border: 1px solid var(--tartan); }
-.waitlist { font-size: 13.5px; font-weight: 500; }
-.waitlist a { color: var(--tartan); }
+.contact { font-size: 13.5px; font-weight: 500; }
+.contact a { color: var(--tartan); overflow-wrap: anywhere; }
 .race.closed .name, .race.closed .date { color: var(--muted); }
 .empty { padding: 18px 16px; color: var(--muted); font-size: 14px; }
 
@@ -248,12 +248,13 @@ footer a { color: var(--ink); }
         b.appendChild(top);
         b.appendChild(el('div', 'facts', [r.venue, (r.distances || []).map(function (x) { return DIST_LABEL[x] || x.toUpperCase(); }).join(' · '), r.statusText].filter(Boolean).join(' — ')));
         if (r.why) b.appendChild(el('p', 'why', r.why));
-        if (r.waitlistEmail) {
-          var wl = el('div', 'waitlist', 'Waitlist: ');
-          var m = el('a', null, 'email ' + r.waitlistEmail);
-          m.href = 'mailto:' + r.waitlistEmail + '?subject=' + encodeURIComponent('Waitlist: ' + r.name);
-          wl.appendChild(m);
-          b.appendChild(wl);
+        if (r.contactEmail) {
+          var label = r.contactLabel || 'Entry enquiries';
+          var ct = el('div', 'contact', '✉ ' + label + ': ');
+          var m = el('a', null, r.contactEmail);
+          m.href = 'mailto:' + r.contactEmail + '?subject=' + encodeURIComponent(r.name + ' – ' + label);
+          ct.appendChild(m);
+          b.appendChild(ct);
         }
         li.appendChild(b);
         ul.appendChild(li);

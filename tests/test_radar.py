@@ -50,12 +50,15 @@ class Validate(unittest.TestCase):
         self.assertTrue(any("missing why" in e for e in errs))
         self.assertTrue(any("duplicate id" in e for e in errs))
 
-    def test_half_marathon_and_waitlist_email(self):
-        ok = race(distances=["half"], waitlistEmail="entries@example.com")
+    def test_half_marathon_and_contact_email(self):
+        ok = race(distances=["half"], contactEmail="entries@example.com", contactLabel="Waitlist")
         self.assertEqual(radar.validate_radar({"lastChecked": "x", "races": [ok]}), [])
-        bad = race(waitlistEmail="not-an-email")
+        bad = race(contactEmail="not-an-email")
         errs = radar.validate_radar({"lastChecked": "x", "races": [bad]})
-        self.assertTrue(any("waitlistEmail" in e for e in errs))
+        self.assertTrue(any("contactEmail" in e for e in errs))
+        orphan = race(contactLabel="Waitlist")
+        errs = radar.validate_radar({"lastChecked": "x", "races": [orphan]})
+        self.assertTrue(any("needs a contactEmail" in e for e in errs))
 
     def test_rejects_unknown_fields(self):
         errs = radar.validate_radar({"lastChecked": "x", "races": [race(extra=1)]})
@@ -127,6 +130,19 @@ class Finalize(unittest.TestCase):
     def test_past_race_drop_is_not_reported(self):
         _, changes = self.run_finalize([race(date="2026-10-18")], [])
         self.assertEqual(changes, [])
+
+
+class PageEmails(unittest.TestCase):
+    def test_decodes_cloudflare_protected_and_mailto_addresses(self):
+        import page_emails
+        # "ben@example.com" encoded with key 0x42, as Cloudflare does it.
+        enc = "42" + "".join("%02x" % (ord(c) ^ 0x42) for c in "ben@example.com")
+        raw = ('<p>Contact Ben <a href="/cdn-cgi/l/email-protection" class="__cf_email__" '
+               'data-cfemail="%s">[email&#160;protected]</a> to join the waiting list.</p>'
+               '<p>Info: <a href="mailto:info@example.org">email us</a></p>' % enc)
+        found = dict(page_emails.page_emails(raw))
+        self.assertEqual(set(found), {"ben@example.com", "info@example.org"})
+        self.assertIn("waiting list", found["ben@example.com"][0])
 
 
 class Build(unittest.TestCase):

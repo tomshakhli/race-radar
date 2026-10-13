@@ -231,6 +231,15 @@
       "url": "https://www.paddockwoodhalfmarathon.co.uk/",
       "notes": "Fast, accurately measured Kent half marathon with pacers, run under a UKA licence. Next edition Sun 14 Mar 2027.",
       "howToCheck": "Approved by the owner. Homepage fetches and shows entries open via Enthuse: https://register.enthuse.com/ps/event/PaddockWoodHalfMarathon2027 (13 Oct 2026). Pacers 1:20 to 2:45. Organised by Paddock Wood AC; race queries to info@sportsystems.co.uk."
+    },
+    {
+      "id": "serpentine-lfotm-5k",
+      "name": "Serpentine Last Friday of the Month 5K",
+      "group": "organiser",
+      "status": "new",
+      "url": "https://serpentinertc.eventrac.co.uk/e/last-friday-of-the-month-5k-14056",
+      "notes": "Monthly lunchtime 5K (12:30) on a two-lap Hyde Park course, run by Serpentine RTC. Places usually sell out about a week before.",
+      "howToCheck": "Approved by the owner. Eventrac page lists the next dates and entry; next race 30 Oct 2026. Online entry only, £7 affiliated / £9 unaffiliated. Because it sells out about a week out, mark races 'act' when within ~10 days and still open. Contact: lfotm5k@serpentine.org.uk"
     }
   ]
 }

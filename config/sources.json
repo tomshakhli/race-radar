@@ -41,7 +41,7 @@
       "status": "quiet",
       "url": "https://uk.srichinmoyraces.org/races/london",
       "notes": "No London races listed after 29 Sep 2026.",
-      "howToCheck": "Fetches fine. Only four London races in 2026."
+      "howToCheck": "Returned 403 on 13 Oct 2026. Try a web search for 'Sri Chinmoy Battersea Tuesday 5K' instead. Last known: only four London races in 2026."
     },
     {
       "id": "pacers-5000",
@@ -50,7 +50,7 @@
       "status": "quiet",
       "url": "https://www.peckhampacers.com/thepacers5000",
       "notes": "Last edition was a Friday in August at Southwark Park track. Next date not announced.",
-      "howToCheck": "Organiser site is usually blocked. Use Eventrac instead: https://peckhampacers.eventrac.co.uk/e/the-pacers-5000-13696"
+      "howToCheck": "Organiser site is usually blocked. Use Eventrac instead: https://peckhampacers.eventrac.co.uk/e/the-pacers-5000-13696 (fetched 13 Oct 2026; shows only the 22 Aug round and no next date)."
     },
     {
       "id": "fnul",
@@ -59,7 +59,7 @@
       "status": "listing",
       "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php",
       "notes": "Seeded evening 5Ks in Battersea Park. Dates through March 2027 are on the board.",
-      "howToCheck": "Use event-details.php, not the homepage: it lists dates and OpenTrack RSVP links. data.opentrack.run comp pages often fail to fetch."
+      "howToCheck": "Use event-details.php, not the homepage: it lists dates and OpenTrack RSVP links. data.opentrack.run comp pages often fail to fetch. The 18 Dec 2026 Christmas 5 Miler is 5 miles, outside our distance list, so it is not on the board."
     },
     {
       "id": "tracksmith-twilight",
@@ -68,7 +68,7 @@
       "status": "quiet",
       "url": "https://www.tracksmith.com/gb/pages/twilight-5000",
       "notes": "London edition only. Usually July.",
-      "howToCheck": "Fetches. Only July dates listed so far."
+      "howToCheck": "Fetches. The 2026 London edition ran 9 July at the LMCT. No 2027 dates announced as of 13 Oct 2026."
     },
     {
       "id": "bmc",
@@ -95,7 +95,7 @@
       "status": "quiet",
       "url": "https://www.nightofthe10kpbs.com/",
       "notes": "Not running in 2026. Hopes to return in 2027, no date yet.",
-      "howToCheck": ""
+      "howToCheck": "Homepage fetches. Organisers say they hope to return in 2027, with no date yet (checked 13 Oct 2026)."
     },
     {
       "id": "top-flight",
@@ -104,7 +104,7 @@
       "status": "listing",
       "url": "https://www.topflightraces.com/",
       "notes": "Fast 10K series with competitive front waves.",
-      "howToCheck": "Main site has no entry statuses. The OpenTrack org page lists races and entry close dates: https://data.opentrack.run/it/o/GBR/TOPFL/"
+      "howToCheck": "The OpenTrack org page (https://data.opentrack.run/it/o/GBR/TOPFL/) returned 403 on 13 Oct 2026. The main site works and lists elite entries: Jarrow (18 Oct), Fulham (15 Nov) and Ribble Valley (27 Dec) are the upcoming races. No 2027 dates listed yet."
     },
     {
       "id": "podium",
@@ -113,25 +113,25 @@
       "status": "listing",
       "url": "https://mybestruns.com/Podium5K",
       "notes": "Graded 5K and mile races. Leicester (Mar 2027) is on the board. A Manchester edition ran for the first time at Tameside Cycle Circuit in Aug 2026.",
-      "howToCheck": "Entries usually open on OpenTrack about three months out. Also watch https://www.sportsshoes.com/store/podium-mcr for Manchester."
+      "howToCheck": "Entries usually open on OpenTrack about three months out. mybestruns.com/Podium5K lists only Leicester (21 Mar 2027). sportsshoes.com/store/podium-mcr shows the Aug 2026 Manchester event as past, with no 2027 Manchester date yet."
     },
     {
       "id": "westminster-mile",
       "name": "Westminster Mile",
       "group": "organiser",
-      "status": "new",
+      "status": "listing",
       "url": "https://www.londonmarathonevents.co.uk/westminster-mile",
-      "notes": "Road mile on The Mall, usually late September.",
-      "howToCheck": "Not yet checked. Run by London Marathon Events."
+      "notes": "Road mile on The Mall, late September. The 2027 edition is open for entry.",
+      "howToCheck": "The event page lists the 2027 date and an Enter now link to Let's Do This. A BMC wave runs on the same day."
     },
     {
       "id": "assembly-league",
       "name": "Assembly League",
       "group": "organiser",
-      "status": "new",
+      "status": "quiet",
       "url": "https://www.serpentine.org.uk/race-assembly/",
-      "notes": "Weekday-evening 5K league races across London parks, April to September. Open to members of league clubs.",
-      "howToCheck": "Approved by the owner. Fixtures are posted on member club sites such as Serpentine (https://www.serpentine.org.uk/race-assembly/) and Dulwich Runners (https://dulwichrunners.org.uk/assembly-league). Next season starts around April."
+      "notes": "Weekday-evening league races in London parks, April to September. Open to members of league clubs. 2027 fixtures not yet published.",
+      "howToCheck": "Approved by the owner. Races run on the first Thursday of the month, April to September. Fixtures are in a planner that the fetch did not show, so check the planner on serpentine.org.uk/race-assembly or member club sites (Dulwich Runners: https://dulwichrunners.org.uk/assembly-league) in early spring. Racing needs membership of a league club."
     },
     {
       "id": "leeds-abbey-dash",
@@ -140,7 +140,7 @@
       "status": "listing",
       "url": "https://www.runforall.com/events/10k/abbey-dash/",
       "notes": "England Athletics 10K Championships.",
-      "howToCheck": "2027 edition not yet checked."
+      "howToCheck": "Runforall page fetches (13 Oct 2026). 2026 general entries open; elite applications closed 31 Jul. No 2027 edition listed yet."
     },
     {
       "id": "telford-10k",
@@ -149,7 +149,7 @@
       "status": "listing",
       "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928",
       "notes": "Billed as the UK's fastest 10K course.",
-      "howToCheck": ""
+      "howToCheck": "Event page fetches (13 Oct 2026). Wave 1 is open to elite-qualified runners only; waves 2 to 4 are closed with no waiting list."
     },
     {
       "id": "trafford-10k",
@@ -158,7 +158,7 @@
       "status": "listing",
       "url": "https://haid.app/en/events/trafford-10k-2027-mqabgfvz",
       "notes": "Historically sells out early.",
-      "howToCheck": "Entry status for 2027 unconfirmed. Verify with the organiser."
+      "howToCheck": "Haid page shows entries open (13 Oct 2026): £28 club, £30 non-club, organiser Run North West. No waiting list or organiser email is shown on the page."
     },
     {
       "id": "brighton-10k",
@@ -167,7 +167,7 @@
       "status": "listing",
       "url": "https://runbaseevents.eventrac.co.uk/e/brighton-10k-10764",
       "notes": "Flat seafront course.",
-      "howToCheck": ""
+      "howToCheck": "Eventrac page fetches (13 Oct 2026) with an Enter Now button for 15 Nov 2026."
     },
     {
       "id": "armagh",
@@ -176,16 +176,16 @@
       "status": "new",
       "url": "https://armaghinternationalroadraces.com/",
       "notes": "Elite-heavy 5K and 3K on a flat circuit in Armagh, usually February.",
-      "howToCheck": "Not yet checked. Older addresses armaghroadrace.com and armagh5k.com may be stale."
+      "howToCheck": "Homepage returned no race details on 13 Oct 2026 (header only). Try a web search for the 2027 Armagh 5K, or look for race pages on the site. Older addresses armaghroadrace.com and armagh5k.com may be stale."
     },
     {
       "id": "preston-fast-5",
       "name": "Preston Fast 5",
       "group": "course",
-      "status": "new",
+      "status": "quiet",
       "url": "https://www.sientries.co.uk/",
       "notes": "Wednesday-evening 5K series on a flat cycle circuit, split sub-18 and over-18. 2026 series has finished.",
-      "howToCheck": "Not yet checked. Entries via SiEntries (search 'Preston Fast 5'). Organised by Preston Harriers."
+      "howToCheck": "SiEntries search showed no Preston Fast 5 events for 2026 or 2027 as of 13 Oct 2026. Entries via SiEntries (search 'Preston Fast 5'). Organised by Preston Harriers."
     },
     {
       "id": "racecalendar-se",
@@ -194,7 +194,7 @@
       "status": "quiet",
       "url": "https://www.racecalendar.co.uk/locations/south-east/5k",
       "notes": "5K and 10K listings for the South East.",
-      "howToCheck": "Also check /locations/south-east/10k. Tags include Flat, EA Licensed and Undulating."
+      "howToCheck": "Also check /locations/south-east/10k. Tags include Flat, EA Licensed and Undulating. The 5K page fetches (13 Oct 2026) but lists about 110 races, mostly mass-participation. Battersea Park series events are tagged Flat and EA Licensed but have not been assessed yet."
     },
     {
       "id": "letsdothis-london-5k",
@@ -203,7 +203,7 @@
       "status": "new",
       "url": "https://www.letsdothis.com/",
       "notes": "Large race marketplace.",
-      "howToCheck": "Not yet checked."
+      "howToCheck": "Returned 403 on 13 Oct 2026. Try a web search for London 5K or 10K events instead."
     },
     {
       "id": "opentrack",
@@ -218,19 +218,19 @@
       "id": "ranelagh-harriers",
       "name": "Ranelagh Harriers",
       "group": "organiser",
-      "status": "new",
+      "status": "listing",
       "url": "https://ranelagh-harriers.co.uk/",
       "notes": "Richmond club staging the Sunset Sprint 3K (July), Ranelagh 10K (June) and Ranelagh Half (May) along the Thames at Ham.",
-      "howToCheck": "Approved by the owner. Race pages: /sunset-sprint (3K, flat out-and-back, Friday evening in July, date TBC), /ranelagh-10k (flat two-lap road and towpath, 20 Jun 2027 TBC), /ranelagh-half (road and towpath to Kingston Bridge and back, 9 May 2027, entries opening soon). Entries via in.njuko.com. Contact: events@ranelagh-harriers.co.uk. The 5-mile Page Cup is cross-country and members-only, so exclude it."
+      "howToCheck": "Approved by the owner. The homepage has no dates. /ranelagh-half works (9 May 2027, entries opening soon). /ranelagh-10k says 20 Jun 2027 TBC, so it stays off the board until dated. /sunset-sprint not checked yet (3K, Friday evening in July, date TBC). Entries via in.njuko.com. Contact: events@ranelagh-harriers.co.uk. Exclude the 5-mile Page Cup (cross-country, members only)."
     },
     {
       "id": "paddock-wood-half",
       "name": "Paddock Wood Half Marathon",
       "group": "course",
-      "status": "new",
+      "status": "listing",
       "url": "https://www.paddockwoodhalfmarathon.co.uk/",
       "notes": "Fast, accurately measured Kent half marathon with pacers, run under a UKA licence. Next edition Sun 14 Mar 2027.",
-      "howToCheck": "Approved by the owner. Entries open via Enthuse: https://register.enthuse.com/ps/event/PaddockWoodHalfMarathon2027. Organised by Paddock Wood AC; race queries to info@sportsystems.co.uk."
+      "howToCheck": "Approved by the owner. Homepage fetches and shows entries open via Enthuse: https://register.enthuse.com/ps/event/PaddockWoodHalfMarathon2027 (13 Oct 2026). Pacers 1:20 to 2:45. Organised by Paddock Wood AC; race queries to info@sportsystems.co.uk."
     }
   ]
 }

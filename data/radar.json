@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-13T19:08:12Z",
+  "lastChecked": "2026-10-13T19:52:44Z",
   "races": [
     {
       "id": "jarrow-10k-2026",
@@ -190,8 +190,8 @@
       "distances": [
         "10k"
       ],
-      "status": "announced",
-      "statusText": "Dated · entry status unconfirmed – check organiser",
+      "status": "open",
+      "statusText": "Entries open · £28 club / £30 non-club · historically sells out early",
       "url": "https://haid.app/en/events/trafford-10k-2027-mqabgfvz",
       "why": "One of the UK's fastest 10K courses with deep club fields – historically sells out.",
       "firstSeen": "2026-10-13",
@@ -213,6 +213,21 @@
       "updated": "2026-10-13"
     },
     {
+      "id": "paddock-wood-half-2027",
+      "name": "Paddock Wood Half Marathon 2027",
+      "date": "2027-03-14",
+      "venue": "Paddock Wood, Kent",
+      "distances": [
+        "half"
+      ],
+      "status": "open",
+      "statusText": "Entries open · pacers 1:20–2:45 · UKA licensed",
+      "url": "https://register.enthuse.com/ps/event/PaddockWoodHalfMarathon2027",
+      "why": "Fast, accurately measured UKA-licensed Kent half with pacers from 1:20 to 2:45.",
+      "firstSeen": "2026-10-13",
+      "updated": "2026-10-13"
+    },
+    {
       "id": "podium-5k-2027",
       "name": "Podium 5K – Leicester",
       "date": "2027-03-21",
@@ -227,6 +242,36 @@
       "why": "Graded 5K and mile races with capped fields. Entries usually open on OpenTrack about three months out and sell out fast.",
       "firstSeen": "2026-10-05",
       "updated": "2026-10-05"
+    },
+    {
+      "id": "ranelagh-half-2027",
+      "name": "Ranelagh Half Marathon",
+      "date": "2027-05-09",
+      "venue": "Riverside Drive, Richmond",
+      "distances": [
+        "half"
+      ],
+      "status": "announced",
+      "statusText": "Dated · entries opening soon",
+      "url": "https://ranelagh-harriers.co.uk/ranelagh-half",
+      "why": "Chip-timed riverside half through Ham and Richmond to Kingston Bridge and back, a short trip from south London.",
+      "firstSeen": "2026-10-13",
+      "updated": "2026-10-13"
+    },
+    {
+      "id": "westminster-mile-2027",
+      "name": "Westminster Mile 2027",
+      "date": "2027-09-25",
+      "venue": "The Mall, London SW1",
+      "distances": [
+        "mile"
+      ],
+      "status": "open",
+      "statusText": "Entries open via Let's Do This",
+      "url": "https://www.londonmarathonevents.co.uk/westminster-mile",
+      "why": "Central London road mile on The Mall with a BMC wave for fast runners.",
+      "firstSeen": "2026-10-13",
+      "updated": "2026-10-13"
     }
   ]
 }

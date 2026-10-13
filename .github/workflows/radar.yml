@@ -39,6 +39,8 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          set -o pipefail
+          [ -n "$ANTHROPIC_API_KEY" ] || { echo "::error::ANTHROPIC_API_KEY secret is not set (Settings > Secrets and variables > Actions > Repository secrets)"; exit 1; }
           claude -p "$(cat prompts/daily.md)" \
             --model "${{ vars.RADAR_MODEL || 'claude-sonnet-5-5' }}" \
             --max-turns 80 \

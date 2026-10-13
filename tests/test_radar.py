@@ -19,9 +19,9 @@ PROFILE = {
 
 def race(**kw):
     r = {
-        "id": "test-5k-2026", "name": "Test 5K", "date": "2026-12-01", "venue": "Somewhere",
+        "id": "test-5k-2026", "name": "Test 5K", "date": "2026-12-20", "venue": "Somewhere",
         "distances": ["5k"], "status": "open", "statusText": "Entries open",
-        "url": "https://example.com", "why": "Fast.", "clash": "",
+        "url": "https://example.com", "why": "Fast.",
         "firstSeen": "2026-10-01", "updated": "2026-10-01",
     }
     r.update(kw)
@@ -49,6 +49,13 @@ class Validate(unittest.TestCase):
         errs = radar.validate_radar({"lastChecked": "x", "races": [r, race()]})
         self.assertTrue(any("missing why" in e for e in errs))
         self.assertTrue(any("duplicate id" in e for e in errs))
+
+    def test_half_marathon_and_waitlist_email(self):
+        ok = race(distances=["half"], waitlistEmail="entries@example.com")
+        self.assertEqual(radar.validate_radar({"lastChecked": "x", "races": [ok]}), [])
+        bad = race(waitlistEmail="not-an-email")
+        errs = radar.validate_radar({"lastChecked": "x", "races": [bad]})
+        self.assertTrue(any("waitlistEmail" in e for e in errs))
 
     def test_rejects_unknown_fields(self):
         errs = radar.validate_radar({"lastChecked": "x", "races": [race(extra=1)]})
@@ -92,7 +99,7 @@ class Finalize(unittest.TestCase):
         data, changes = self.run_finalize([], [race(firstSeen="2020-01-01", updated="2020-01-01")])
         r = data["races"][0]
         self.assertEqual((r["firstSeen"], r["updated"]), ("2026-10-20", "2026-10-20"))
-        self.assertEqual(changes, ["Test 5K – 1 Dec – New: Open (Entries open)"])
+        self.assertEqual(changes, ["Test 5K – 20 Dec – New: Open (Entries open)"])
 
     def test_status_change_bumps_updated_and_keeps_first_seen(self):
         old = race()
@@ -100,7 +107,7 @@ class Finalize(unittest.TestCase):
         r = data["races"][0]
         self.assertEqual(r["updated"], "2026-10-20")
         self.assertEqual(r["firstSeen"], "2026-10-01")
-        self.assertEqual(changes, ["Test 5K – 1 Dec – Closed (Sold out)"])
+        self.assertEqual(changes, ["Test 5K – 20 Dec – Closed (Sold out)"])
 
     def test_unchanged_race_is_untouched(self):
         old = race()
@@ -108,13 +115,14 @@ class Finalize(unittest.TestCase):
         self.assertEqual(data["races"][0]["updated"], "2026-10-01")
         self.assertEqual(changes, [])
 
-    def test_clash_is_recomputed(self):
-        data, _ = self.run_finalize([], [race(date="2026-11-15", clash="wrong")])
-        self.assertEqual(data["races"][0]["clash"], "7 days after Malaga HM (8 Nov)")
+    def test_clash_stays_off_the_site_but_is_in_the_notification(self):
+        data, changes = self.run_finalize([], [race(date="2026-11-15", clash="old field")])
+        self.assertNotIn("clash", data["races"][0])
+        self.assertEqual(changes, ["Test 5K – 15 Nov – New: Open (Entries open) ⚠ 7 days after Malaga HM (8 Nov)"])
 
     def test_removed_future_race_is_reported(self):
         _, changes = self.run_finalize([race()], [])
-        self.assertEqual(changes, ["Test 5K – 1 Dec – Removed"])
+        self.assertEqual(changes, ["Test 5K – 20 Dec – Removed"])
 
     def test_past_race_drop_is_not_reported(self):
         _, changes = self.run_finalize([race(date="2026-10-18")], [])

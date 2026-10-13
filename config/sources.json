@@ -1,25 +1,37 @@
 {
-  "suggestFormUrl": "",
+  "suggestFormUrl": "https://forms.gle/DRtKcy1xZ7Ex7hhHA",
   "criteria": {
-    "distances": "Road mile; track mile, 1500m, 3000m and 5000m; road 5K; road 10K; track 10,000m.",
+    "distances": "Road mile; track mile, 1500m, 3000m and 5000m; road 5K; road 10K; track 10,000m; road half marathon.",
     "include": [
       "Fast, flat and accurately measured courses",
       "Competitive, graded or PB-focused races, ideally with pacers",
       "Evening track meets",
-      "London and the South East (within about 1.5 hours of Peckham)",
-      "Elsewhere in the UK, only standout fast courses or elite fields"
+      "London and proximity favoured",
+      "Further afield, only standout fast courses or elite fields"
     ],
     "exclude": [
       "Fun runs, themed or novelty events",
       "Trail, cross-country and multi-terrain",
-      "Half marathon or longer",
+      "Longer than a half marathon",
       "Charity-only events"
     ]
   },
   "groups": [
-    { "key": "organiser", "title": "Pre-approved organisers", "note": "Any of their mile to 10K races makes the board." },
-    { "key": "course", "title": "Standout UK courses", "note": "Outside London and the South East, only courses like these make the cut." },
-    { "key": "listing", "title": "Discovery listings", "note": "Calendars scanned for new fast races. Mostly mass-participation, so filtered hard." }
+    {
+      "key": "organiser",
+      "title": "Pre-approved organisers",
+      "note": "Any of their mile to half marathon races makes the board."
+    },
+    {
+      "key": "course",
+      "title": "Standout UK courses",
+      "note": "Further from London, only courses like these make the cut."
+    },
+    {
+      "key": "listing",
+      "title": "Discovery listings",
+      "note": "Calendars scanned for new fast races. Mostly mass-participation, so filtered hard."
+    }
   ],
   "sources": [
     {
@@ -73,7 +85,7 @@
       "group": "organiser",
       "status": "listing",
       "url": "https://bmaf.org.uk/fixtures/",
-      "notes": "UK track, road and indoor championships, mile to 10K only. Masters age groups only.",
+      "notes": "UK track, road and indoor championships, mile to half marathon. Masters age groups only.",
       "howToCheck": "Fixtures page shows 'Entries Full' and 'Advance Notice' statuses. bmaf.opentrack.run errors."
     },
     {
@@ -118,8 +130,8 @@
       "group": "organiser",
       "status": "new",
       "url": "https://www.serpentine.org.uk/race-assembly/",
-      "notes": "Weekday-evening 5K league for London club members, April to September.",
-      "howToCheck": "Not yet checked. Member clubs only; fixtures are posted on club sites such as Serpentine and Dulwich Runners."
+      "notes": "Weekday-evening 5K league races across London parks, April to September. Open to members of league clubs.",
+      "howToCheck": "Approved by the owner. Fixtures are posted on member club sites such as Serpentine (https://www.serpentine.org.uk/race-assembly/) and Dulwich Runners (https://dulwichrunners.org.uk/assembly-league). Next season starts around April."
     },
     {
       "id": "leeds-abbey-dash",

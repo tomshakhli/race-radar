@@ -1,13 +1,13 @@
 # Race Radar
 
-A daily-updated page of fast, PB-focused mile to 10K races in London, the South East and the UK's quickest courses. It includes a public **Sources** section where collaborators can see everything the radar checks and suggest additions.
+A daily-updated page of fast, PB-focused mile to half marathon races, favouring London and nearby, plus the UK's quickest courses. It includes a public **Sources** section where collaborators can see everything the radar checks and suggest additions.
 
 ## How it works
 
 ```
 GitHub Action, 06:00 UTC daily
   1. claude -p prompts/daily.md      research; edits data/radar.json + config/sources.json
-  2. scripts/radar.py finalize       validate, drop past races, clash flags, timestamps, diff
+  2. scripts/radar.py finalize       validate, drop past races, timestamps, diff
   3. tests + commit
   4. scripts/radar.py build          site/index.html + data → dist/ → GitHub Pages
   5. ntfy push with the change list  (optional)
@@ -19,7 +19,7 @@ Pushing to `main` (for example, after editing sources by hand) only rebuilds and
 |---|---|
 | `data/radar.json` | Races on the board. The source of truth. |
 | `config/sources.json` | Criteria, suggestion-form link, and every source checked, shown publicly on the page. `howToCheck` is guidance for the agent only and isn't published. |
-| `config/profile.json` | Runner PBs and commitments used for clash flags. |
+| `config/profile.json` | Runner level and home base. Commitments add clash notes to the daily notification only, never to the site. |
 | `prompts/daily.md` | The research agent's instructions. |
 | `scripts/radar.py` | `validate`, `finalize`, `build`. Standard library only, Python 3.9+. |
 | `site/index.html` | Page template. The data is inlined at build time. |

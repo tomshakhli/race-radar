@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Race Radar</title>
-<meta name="description" content="Fast, PB-focused mile to 10K races in London, the South East and the UK's quickest courses, checked every morning.">
+<meta name="description" content="Fast, PB-focused mile to half marathon races, favouring London and nearby, plus the UK's quickest courses. Checked every morning.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23c2402a' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23c2402a' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23c2402a'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,7 +85,8 @@ h2 .count { font-family: var(--mono); font-size: 13px; color: var(--muted); font
 .pill.announced, .pill.new-src { background: var(--soon-soft); color: var(--soon); }
 .pill.closed, .pill.quiet { background: var(--closed-soft); color: var(--closed); }
 .pill.new, .pill.suggested { background: transparent; color: var(--tartan); border: 1px solid var(--tartan); }
-.clash { font-size: 13px; color: var(--tartan); font-weight: 500; }
+.waitlist { font-size: 13.5px; font-weight: 500; }
+.waitlist a { color: var(--tartan); }
 .race.closed .name, .race.closed .date { color: var(--muted); }
 .empty { padding: 18px 16px; color: var(--muted); font-size: 14px; }
 
@@ -122,7 +123,7 @@ footer a { color: var(--ink); }
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">Fast mile – 10K races · London &amp; SE + UK PB courses</div>
+    <div class="eyebrow">Fast mile – half marathon races · London &amp; nearby + UK PB courses</div>
     <h1>Race <span>Radar</span></h1>
     <p class="lede">Graded, fast and PB-focused races, checked every morning. Entries for the good ones go quickly, so the most urgent sit at the top.</p>
     <div class="meta">
@@ -138,6 +139,7 @@ footer a { color: var(--ink); }
     <button class="chip" data-f="3k" aria-pressed="false">3000m</button>
     <button class="chip" data-f="5k" aria-pressed="false">5K / 5000m</button>
     <button class="chip" data-f="10k" aria-pressed="false">10K / 10,000m</button>
+    <button class="chip" data-f="half" aria-pressed="false">Half marathon</button>
   </div>
 
   <div id="board"></div>
@@ -184,6 +186,7 @@ footer a { color: var(--ink); }
     { key: 'closed', title: 'Sold out / closed', note: 'Kept here until race day in case a waitlist opens.' }
   ];
   var PILL = { act: 'Act now', open: 'Open', announced: 'Coming', closed: 'Closed' };
+  var DIST_LABEL = { mile: 'Mile', '3k': '3K', '5k': '5K', '10k': '10K', half: 'Half marathon' };
   var SRC_PILL = { listing: ['listing', 'On the board'], quiet: ['quiet', 'Quiet'], 'new': ['new-src', 'Not yet checked'], suggested: ['suggested', 'Under review'] };
   var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -243,9 +246,15 @@ footer a { color: var(--ink); }
         top.appendChild(el('span', 'pill ' + r.status, PILL[r.status] || r.status));
         if (isNew(r)) { top.appendChild(el('span', 'pill new', 'New')); newCount++; }
         b.appendChild(top);
-        b.appendChild(el('div', 'facts', [r.venue, (r.distances || []).map(function (x) { return x === 'mile' ? 'Mile' : x.toUpperCase(); }).join(' · '), r.statusText].filter(Boolean).join(' — ')));
+        b.appendChild(el('div', 'facts', [r.venue, (r.distances || []).map(function (x) { return DIST_LABEL[x] || x.toUpperCase(); }).join(' · '), r.statusText].filter(Boolean).join(' — ')));
         if (r.why) b.appendChild(el('p', 'why', r.why));
-        if (r.clash) b.appendChild(el('div', 'clash', '⚠ Clash: ' + r.clash));
+        if (r.waitlistEmail) {
+          var wl = el('div', 'waitlist', 'Waitlist: ');
+          var m = el('a', null, 'email ' + r.waitlistEmail);
+          m.href = 'mailto:' + r.waitlistEmail + '?subject=' + encodeURIComponent('Waitlist: ' + r.name);
+          wl.appendChild(m);
+          b.appendChild(wl);
+        }
         li.appendChild(b);
         ul.appendChild(li);
       });

@@ -5,8 +5,9 @@ The research agent edits data/radar.json (and config/sources.json). This script
 does everything that shouldn't depend on judgment:
 
   validate                 check data + config against the schema
-  finalize --prev FILE     after the agent runs: drop past races, recompute
-                           clash flags, bump lastChecked, write a change summary
+  finalize --prev FILE     after the agent runs: drop past races, bump
+                           lastChecked, write a change summary (with clash
+                           notes for the owner's notification)
   build [--out DIR]        render site/index.html with the data inlined
 
 Standard library only (Python 3.9+).
@@ -26,13 +27,15 @@ TEMPLATE = ROOT / "site" / "index.html"
 
 STATUSES = ("act", "open", "announced", "closed")
 STATUS_LABEL = {"act": "Act now", "open": "Open", "announced": "Announced", "closed": "Closed"}
-DISTANCES = ("mile", "3k", "5k", "10k")
+DISTANCES = ("mile", "3k", "5k", "10k", "half")
 SOURCE_GROUPS = ("organiser", "course", "listing")
 SOURCE_STATUSES = ("listing", "quiet", "new", "suggested")
 RACE_FIELDS = ("id", "name", "date", "venue", "distances", "status", "statusText",
-               "url", "why", "clash", "firstSeen", "updated")
+               "url", "why", "firstSeen", "updated")
+OPTIONAL_RACE_FIELDS = ("waitlistEmail",)
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
@@ -81,7 +84,7 @@ def validate_radar(data):
         for k in RACE_FIELDS:
             if k not in r:
                 errs.append("%s: missing %s" % (where, k))
-        extra = set(r) - set(RACE_FIELDS)
+        extra = set(r) - set(RACE_FIELDS) - set(OPTIONAL_RACE_FIELDS)
         if extra:
             errs.append("%s: unknown fields %s" % (where, sorted(extra)))
         rid = r.get("id")
@@ -103,8 +106,8 @@ def validate_radar(data):
         for k in ("name", "venue", "statusText", "why"):
             if k in r and (not isinstance(r[k], str) or not r[k].strip()):
                 errs.append("%s: %s must be a non-empty string" % (where, k))
-        if "clash" in r and not isinstance(r["clash"], str):
-            errs.append(where + ": clash must be a string")
+        if "waitlistEmail" in r and not (isinstance(r["waitlistEmail"], str) and EMAIL_RE.match(r["waitlistEmail"])):
+            errs.append(where + ": waitlistEmail must be an email address")
     return errs
 
 
@@ -174,8 +177,6 @@ def clash_text(race_date, commitments, window):
 def finalize(new, prev, profile, today, now_iso):
     """Apply the deterministic update rules. Returns (data, changes)."""
     today_s = today.isoformat()
-    window = profile.get("clashWindowDays", 7)
-    commitments = profile.get("commitments", [])
     prev_by_id = {r["id"]: r for r in prev.get("races", [])}
 
     races = []
@@ -183,7 +184,7 @@ def finalize(new, prev, profile, today, now_iso):
         if r["date"] < today_s:
             continue
         r = dict(r)
-        r["clash"] = clash_text(r["date"], commitments, window)
+        r.pop("clash", None)
         old = prev_by_id.get(r["id"])
         if old is None:
             r["firstSeen"] = today_s
@@ -198,17 +199,23 @@ def finalize(new, prev, profile, today, now_iso):
     out = dict(new)
     out["lastChecked"] = now_iso
     out["races"] = races
-    return out, diff(prev, out, today_s)
+    return out, diff(prev, out, today_s, profile)
 
 
-def diff(prev, new, today_s):
-    """Human summary: 'Race – date – new status' lines."""
+def diff(prev, new, today_s, profile=None):
+    """Human summary: 'Race – date – new status' lines. Clashes with the owner's
+    commitments are noted here only: they matter to the owner, not to site visitors."""
+    profile = profile or {}
+    commitments = profile.get("commitments", [])
+    window = profile.get("clashWindowDays", 7)
     prev_by_id = {r["id"]: r for r in prev.get("races", [])}
     new_ids = {r["id"] for r in new.get("races", [])}
     lines = []
 
     def fmt(r, label):
-        return "%s – %s – %s" % (r["name"], short_date(parse_date(r["date"])), label)
+        line = "%s – %s – %s" % (r["name"], short_date(parse_date(r["date"])), label)
+        clash = clash_text(r["date"], commitments, window) if label != "Removed" else ""
+        return line + (" ⚠ " + clash if clash else "")
 
     for r in new.get("races", []):
         old = prev_by_id.get(r["id"])

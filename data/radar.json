@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-13T20:15:29Z",
+  "lastChecked": "2026-10-13T20:52:52Z",
   "races": [
     {
       "id": "jarrow-10k-2026",
@@ -121,7 +121,9 @@
       "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928",
       "why": "Billed as the fastest 10K course in the UK – flat and traffic-free. Mass waves have gone; the fast wave is still open.",
       "firstSeen": "2026-10-05",
-      "updated": "2026-10-05"
+      "updated": "2026-10-05",
+      "contactEmail": "telford10k@yahoo.co.uk",
+      "contactLabel": "Elite entries (sub-30:30 men / sub-35:00 women)"
     },
     {
       "id": "ribble-valley-10k-2026",

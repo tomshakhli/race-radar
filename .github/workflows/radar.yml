@@ -2,7 +2,7 @@ name: Race Radar
 
 on:
   schedule:
-    - cron: "0 6 * * *"   # 06:00 UTC daily (07:00 BST)
+    - cron: "0 6 * * 1,3,5"   # 06:00 UTC Mon, Wed, Fri (07:00 BST)
   workflow_dispatch:
   push:
     branches: [main]
@@ -42,7 +42,7 @@ jobs:
           set -o pipefail
           [ -n "$ANTHROPIC_API_KEY" ] || { echo "::error::ANTHROPIC_API_KEY secret is not set (Settings > Secrets and variables > Actions > Repository secrets)"; exit 1; }
           claude -p "$(cat prompts/daily.md)" \
-            --model "${{ vars.RADAR_MODEL || 'claude-sonnet-5-5' }}" \
+            --model "${{ vars.RADAR_MODEL || 'claude-haiku-5-5' }}" \
             --max-turns 80 \
             --allowedTools "Read,Glob,Grep,WebSearch,WebFetch,Edit(data/radar.json),Edit(config/sources.json),Write(data/radar.json),Write(config/sources.json)" \
             | tee "$RUNNER_TEMP/agent.txt"

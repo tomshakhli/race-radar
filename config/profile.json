@@ -1,0 +1,12 @@
+{
+  "runner": {
+    "name": "Tom Shakhli",
+    "home": "London SE15",
+    "pbs": { "mile": "4:58", "5k": "16:11" }
+  },
+  "clashWindowDays": 7,
+  "commitments": [
+    { "date": "2026-11-08", "label": "Malaga HM" },
+    { "date": "2026-11-29", "label": "target 5K" }
+  ]
+}

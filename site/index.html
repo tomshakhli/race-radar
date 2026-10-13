@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Race Radar</title>
+<meta name="description" content="Fast, PB-focused mile to 10K races in London, the South East and the UK's quickest courses, checked every morning.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23c2402a' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23c2402a' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23c2402a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a heat-sheet board. Header strip, filter lanes, then one ruled list per status, most urgent first, then the sources the board is built from. */
+:root {
+  --bg: #f3f5f6;
+  --surface: #ffffff;
+  --ink: #15191c;
+  --muted: #5d676e;
+  --rule: #d9dfe2;
+  --tartan: #c2402a;      /* track-surface red, the one accent */
+  --tartan-soft: #f6e1dc;
+  --open: #1f6b4f;
+  --open-soft: #dcefe6;
+  --soon: #7a5a00;
+  --soon-soft: #f4ead0;
+  --closed: #6b7378;
+  --closed-soft: #e6eaec;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111416; --surface: #181c1f; --ink: #e8ecee; --muted: #98a3aa; --rule: #2a3135;
+    --tartan: #ef6a50; --tartan-soft: #3a1f1a; --open: #5fc69a; --open-soft: #173027;
+    --soon: #e0bd5c; --soon-soft: #332b14; --closed: #8d979d; --closed-soft: #23292c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111416; --surface: #181c1f; --ink: #e8ecee; --muted: #98a3aa; --rule: #2a3135;
+  --tartan: #ef6a50; --tartan-soft: #3a1f1a; --open: #5fc69a; --open-soft: #173027;
+  --soon: #e0bd5c; --soon-soft: #332b14; --closed: #8d979d; --closed-soft: #23292c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 28px; }
+
+header { display: grid; gap: 10px; border-bottom: 3px solid var(--tartan); padding-bottom: 18px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(40px, 9vw, 64px); line-height: .9; margin: 0; letter-spacing: .01em; text-transform: uppercase; }
+h1 span { color: var(--tartan); }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 500; }
+.meta a { color: var(--ink); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 13px/1 var(--body); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--tartan); outline-offset: 2px; }
+
+section { display: grid; gap: 10px; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; margin: 0; display: flex; align-items: baseline; gap: 10px; }
+h2 .count { font-family: var(--mono); font-size: 13px; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+.sec-note { margin: -4px 0 0; color: var(--muted); font-size: 13.5px; }
+
+.list { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+.race { display: grid; grid-template-columns: 76px 1fr; gap: 4px 16px; padding: 14px 16px; border-top: 1px solid var(--rule); }
+.race:first-child { border-top: 0; }
+.date { font-family: var(--mono); font-variant-numeric: tabular-nums; line-height: 1.15; }
+.date .d { font-family: var(--display); font-size: 30px; font-weight: 700; display: block; }
+.date .m { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.body { min-width: 0; display: grid; gap: 4px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.name { font-weight: 600; font-size: 16px; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; }
+.name:hover { color: var(--tartan); text-decoration: underline; }
+.facts { font-size: 13.5px; color: var(--muted); }
+.why { font-size: 14px; margin: 0; }
+.pill { font: 500 11.5px/1 var(--mono); padding: 5px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.pill.act { background: var(--tartan); color: #fff; }
+.pill.open, .pill.listing { background: var(--open-soft); color: var(--open); }
+.pill.announced, .pill.new-src { background: var(--soon-soft); color: var(--soon); }
+.pill.closed, .pill.quiet { background: var(--closed-soft); color: var(--closed); }
+.pill.new, .pill.suggested { background: transparent; color: var(--tartan); border: 1px solid var(--tartan); }
+.clash { font-size: 13px; color: var(--tartan); font-weight: 500; }
+.race.closed .name, .race.closed .date { color: var(--muted); }
+.empty { padding: 18px 16px; color: var(--muted); font-size: 14px; }
+
+/* Sources */
+#sources { border-top: 3px solid var(--ink); padding-top: 22px; gap: 16px; }
+.src-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px/1 var(--body); padding: 11px 16px; border-radius: 6px; background: var(--tartan); color: #fff; text-decoration: none; }
+.btn:hover { filter: brightness(1.08); }
+.btn[hidden] { display: none; }
+.criteria { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 0 16px; }
+.criteria summary { cursor: pointer; padding: 12px 0; font-weight: 600; font-size: 14px; }
+.criteria-body { display: grid; gap: 12px; padding-bottom: 16px; font-size: 14px; }
+.criteria-body p { margin: 0; }
+.criteria-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 24px; }
+.criteria h4 { margin: 0 0 4px; font: 500 11.5px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.criteria ul { margin: 0; padding-left: 18px; }
+.src-group { display: grid; gap: 8px; }
+h3 { margin: 6px 0 0; font-family: var(--display); font-weight: 600; font-size: 18px; letter-spacing: .04em; text-transform: uppercase; }
+.src { display: grid; gap: 2px; padding: 12px 16px; border-top: 1px solid var(--rule); }
+.src:first-child { border-top: 0; }
+.src .name { font-size: 15px; }
+.src .notes { font-size: 13.5px; color: var(--muted); margin: 0; }
+
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+footer a { color: var(--ink); }
+
+@media (max-width: 480px) {
+  .race { grid-template-columns: 56px 1fr; gap: 4px 12px; }
+  .date .d { font-size: 24px; }
+  .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Fast mile – 10K races · London &amp; SE + UK PB courses</div>
+    <h1>Race <span>Radar</span></h1>
+    <p class="lede">Graded, fast and PB-focused races, checked every morning. Entries for the good ones go quickly, so the most urgent sit at the top.</p>
+    <div class="meta">
+      <span>Last checked: <b id="checked">–</b></span>
+      <span id="newnote"></span>
+      <a href="#sources">Sources &amp; suggestions ↓</a>
+    </div>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filter by distance">
+    <button class="chip" data-f="all" aria-pressed="true">All distances</button>
+    <button class="chip" data-f="mile" aria-pressed="false">Mile / 1500m</button>
+    <button class="chip" data-f="3k" aria-pressed="false">3000m</button>
+    <button class="chip" data-f="5k" aria-pressed="false">5K / 5000m</button>
+    <button class="chip" data-f="10k" aria-pressed="false">10K / 10,000m</button>
+  </div>
+
+  <div id="board"></div>
+
+  <section id="sources" aria-labelledby="sources-title">
+    <div class="src-head">
+      <div>
+        <h2 id="sources-title">Sources <span class="count" id="src-count"></span></h2>
+        <p class="sec-note">Every organiser and listing the radar checks each morning. Know a fast race or series that's missing?</p>
+      </div>
+      <a class="btn" id="suggest" href="#" target="_blank" rel="noopener" hidden>Suggest a source ↗</a>
+    </div>
+    <details class="criteria">
+      <summary>What makes the cut</summary>
+      <div class="criteria-body">
+        <p><b>Distances:</b> <span id="crit-distances"></span></p>
+        <div class="criteria-cols">
+          <div><h4>In</h4><ul id="crit-include"></ul></div>
+          <div><h4>Out</h4><ul id="crit-exclude"></ul></div>
+        </div>
+      </div>
+    </details>
+    <div id="src-groups"></div>
+  </section>
+
+  <footer>Updated automatically each morning. Always check the organiser's page before entering. Statuses can change between checks. <a href="radar.json">Raw data (JSON)</a>.</footer>
+</div>
+
+<script type="application/json" id="radar-data">{{RADAR_JSON}}</script>
+<script type="application/json" id="sources-data">{{SOURCES_JSON}}</script>
+<script>
+(function () {
+  function read(id, fallback) {
+    try { return JSON.parse(document.getElementById(id).textContent); }
+    catch (e) { return fallback; }
+  }
+  var data = read('radar-data', { races: [] });
+  var src = read('sources-data', { sources: [], groups: [], criteria: {} });
+
+  var SECTIONS = [
+    { key: 'act', title: 'Act now', note: 'Entries open and likely to sell out, or opening within a week.' },
+    { key: 'open', title: 'Entries open', note: '' },
+    { key: 'announced', title: 'Announced', note: 'Dated, but entries not open yet.' },
+    { key: 'closed', title: 'Sold out / closed', note: 'Kept here until race day in case a waitlist opens.' }
+  ];
+  var PILL = { act: 'Act now', open: 'Open', announced: 'Coming', closed: 'Closed' };
+  var SRC_PILL = { listing: ['listing', 'On the board'], quiet: ['quiet', 'Quiet'], 'new': ['new-src', 'Not yet checked'], suggested: ['suggested', 'Under review'] };
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  // Per-viewer "new since last visit" marker (convenience only).
+  var lastVisit = null;
+  try { lastVisit = localStorage.getItem('rr-last-visit'); } catch (e) {}
+  try { localStorage.setItem('rr-last-visit', new Date().toISOString().slice(0, 10)); } catch (e) {}
+  var filter = 'all';
+  try { filter = localStorage.getItem('rr-filter') || 'all'; } catch (e) {}
+
+  var today = new Date().toISOString().slice(0, 10);
+  var races = (data.races || []).filter(function (r) { return !r.date || r.date >= today; });
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function link(cls, text, href) {
+    var a = el('a', cls, text);
+    a.href = href; a.target = '_blank'; a.rel = 'noopener';
+    return a;
+  }
+  function isNew(r) { return lastVisit ? (r.updated || '') > lastVisit : false; }
+  function matches(r) { return filter === 'all' || (r.distances || []).indexOf(filter) !== -1; }
+
+  function render() {
+    var board = document.getElementById('board');
+    board.textContent = '';
+    var newCount = 0;
+    SECTIONS.forEach(function (s) {
+      var items = races.filter(function (r) { return r.status === s.key && matches(r); })
+        .sort(function (a, b) { return (a.date || '9999').localeCompare(b.date || '9999'); });
+      if (!items.length && s.key === 'closed') return;
+      var sec = el('section');
+      var h = el('h2', null, s.title);
+      h.appendChild(el('span', 'count', String(items.length)));
+      sec.appendChild(h);
+      if (s.note) sec.appendChild(el('p', 'sec-note', s.note));
+      var ul = el('ul', 'list');
+      if (!items.length) ul.appendChild(el('li', 'empty', 'Nothing here right now.'));
+      items.forEach(function (r) {
+        var li = el('li', 'race' + (r.status === 'closed' ? ' closed' : ''));
+        var d = el('div', 'date');
+        if (r.date) {
+          var dt = new Date(r.date + 'T12:00:00Z');
+          d.appendChild(el('span', 'd', String(dt.getUTCDate())));
+          d.appendChild(el('span', 'm', MONTHS[dt.getUTCMonth()] + ' ' + String(dt.getUTCFullYear()).slice(2)));
+          d.appendChild(el('span', 'm', DAYS[dt.getUTCDay()]));
+        } else d.appendChild(el('span', 'm', 'TBC'));
+        li.appendChild(d);
+        var b = el('div', 'body');
+        var top = el('div', 'top');
+        top.appendChild(link('name', r.name, r.url));
+        top.appendChild(el('span', 'pill ' + r.status, PILL[r.status] || r.status));
+        if (isNew(r)) { top.appendChild(el('span', 'pill new', 'New')); newCount++; }
+        b.appendChild(top);
+        b.appendChild(el('div', 'facts', [r.venue, (r.distances || []).map(function (x) { return x === 'mile' ? 'Mile' : x.toUpperCase(); }).join(' · '), r.statusText].filter(Boolean).join(' — ')));
+        if (r.why) b.appendChild(el('p', 'why', r.why));
+        if (r.clash) b.appendChild(el('div', 'clash', '⚠ Clash: ' + r.clash));
+        li.appendChild(b);
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+      board.appendChild(sec);
+    });
+    document.getElementById('newnote').textContent = newCount ? newCount + ' updated since your last visit' : '';
+  }
+
+  function srcItem(s) {
+    var li = el('li', 'src');
+    var top = el('div', 'top');
+    top.appendChild(link('name', s.name, s.url));
+    var p = SRC_PILL[s.status];
+    if (p) top.appendChild(el('span', 'pill ' + p[0], p[1]));
+    li.appendChild(top);
+    var note = s.notes || '';
+    if (s.suggestedBy) note = (note ? note + ' ' : '') + 'Suggested by ' + s.suggestedBy + '.';
+    if (note) li.appendChild(el('p', 'notes', note));
+    return li;
+  }
+
+  function renderSources() {
+    var all = src.sources || [];
+    document.getElementById('src-count').textContent = String(all.filter(function (s) { return s.status !== 'suggested'; }).length);
+
+    var btn = document.getElementById('suggest');
+    if (/^https?:\/\//.test(src.suggestFormUrl || '')) { btn.href = src.suggestFormUrl; btn.hidden = false; }
+
+    var c = src.criteria || {};
+    document.getElementById('crit-distances').textContent = c.distances || '';
+    [['crit-include', c.include], ['crit-exclude', c.exclude]].forEach(function (pair) {
+      var ul = document.getElementById(pair[0]);
+      (pair[1] || []).forEach(function (t) { ul.appendChild(el('li', null, t)); });
+    });
+
+    var wrap = document.getElementById('src-groups');
+    var groups = (src.groups || []).map(function (g) {
+      return { title: g.title, note: g.note, items: all.filter(function (s) { return s.group === g.key && s.status !== 'suggested'; }) };
+    });
+    var suggested = all.filter(function (s) { return s.status === 'suggested'; });
+    if (suggested.length) groups.push({ title: 'Suggested, under review', note: 'Ideas from collaborators. They join the daily check once reviewed.', items: suggested });
+
+    groups.forEach(function (g) {
+      if (!g.items.length) return;
+      var box = el('div', 'src-group');
+      box.appendChild(el('h3', null, g.title));
+      if (g.note) box.appendChild(el('p', 'sec-note', g.note));
+      var ul = el('ul', 'list');
+      g.items.slice().sort(function (a, b) { return a.name.localeCompare(b.name); })
+        .forEach(function (s) { ul.appendChild(srcItem(s)); });
+      box.appendChild(ul);
+      wrap.appendChild(box);
+    });
+  }
+
+  if (data.lastChecked) {
+    var c = new Date(data.lastChecked);
+    document.getElementById('checked').textContent =
+      DAYS[c.getDay()] + ' ' + c.getDate() + ' ' + MONTHS[c.getMonth()] + ', ' +
+      String(c.getHours()).padStart(2, '0') + ':' + String(c.getMinutes()).padStart(2, '0');
+  }
+
+  document.querySelectorAll('.chip').forEach(function (btn) {
+    btn.setAttribute('aria-pressed', String(btn.dataset.f === filter));
+    btn.addEventListener('click', function () {
+      filter = btn.dataset.f;
+      try { localStorage.setItem('rr-filter', filter); } catch (e) {}
+      document.querySelectorAll('.chip').forEach(function (o) { o.setAttribute('aria-pressed', String(o === btn)); });
+      render();
+    });
+  });
+
+  render();
+  renderSources();
+})();
+</script>
+</body>
+</html>

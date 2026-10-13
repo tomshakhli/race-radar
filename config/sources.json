@@ -1,0 +1,206 @@
+{
+  "suggestFormUrl": "",
+  "criteria": {
+    "distances": "Road mile; track mile, 1500m, 3000m and 5000m; road 5K; road 10K; track 10,000m.",
+    "include": [
+      "Fast, flat and accurately measured courses",
+      "Competitive, graded or PB-focused races, ideally with pacers",
+      "Evening track meets",
+      "London and the South East (within about 1.5 hours of Peckham)",
+      "Elsewhere in the UK, only standout fast courses or elite fields"
+    ],
+    "exclude": [
+      "Fun runs, themed or novelty events",
+      "Trail, cross-country and multi-terrain",
+      "Half marathon or longer",
+      "Charity-only events"
+    ]
+  },
+  "groups": [
+    { "key": "organiser", "title": "Pre-approved organisers", "note": "Any of their mile to 10K races makes the board." },
+    { "key": "course", "title": "Standout UK courses", "note": "Outside London and the South East, only courses like these make the cut." },
+    { "key": "listing", "title": "Discovery listings", "note": "Calendars scanned for new fast races. Mostly mass-participation, so filtered hard." }
+  ],
+  "sources": [
+    {
+      "id": "sri-chinmoy-london",
+      "name": "Sri Chinmoy Battersea Tuesday 5Ks",
+      "group": "organiser",
+      "status": "quiet",
+      "url": "https://uk.srichinmoyraces.org/races/london",
+      "notes": "No London races listed after 29 Sep 2026.",
+      "howToCheck": "Fetches fine. Only four London races in 2026."
+    },
+    {
+      "id": "pacers-5000",
+      "name": "The Pacers 5000",
+      "group": "organiser",
+      "status": "quiet",
+      "url": "https://www.peckhampacers.com/thepacers5000",
+      "notes": "Last edition was a Friday in August at Southwark Park track. Next date not announced.",
+      "howToCheck": "Organiser site is usually blocked. Use Eventrac instead: https://peckhampacers.eventrac.co.uk/e/the-pacers-5000-13696"
+    },
+    {
+      "id": "fnul",
+      "name": "Friday Night Under the Lights 5K",
+      "group": "organiser",
+      "status": "listing",
+      "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php",
+      "notes": "Seeded evening 5Ks in Battersea Park. Dates through March 2027 are on the board.",
+      "howToCheck": "Use event-details.php, not the homepage: it lists dates and OpenTrack RSVP links. data.opentrack.run comp pages often fail to fetch."
+    },
+    {
+      "id": "tracksmith-twilight",
+      "name": "Tracksmith Twilight 5000",
+      "group": "organiser",
+      "status": "quiet",
+      "url": "https://www.tracksmith.com/gb/pages/twilight-5000",
+      "notes": "London edition only. Usually July.",
+      "howToCheck": "Fetches. Only July dates listed so far."
+    },
+    {
+      "id": "bmc",
+      "name": "British Milers Club",
+      "group": "organiser",
+      "status": "quiet",
+      "url": "https://www.britishmilersclub.com/fixtures/",
+      "notes": "Grand Prix and Gold Standard meets. Nothing listed after 26 Sep 2026; 2027 indoor dates not out yet.",
+      "howToCheck": "Indoor fixtures live at https://www.britishmilersclub.com/meeting-category/bmc-indoors"
+    },
+    {
+      "id": "bmaf",
+      "name": "British Masters (BMAF)",
+      "group": "organiser",
+      "status": "listing",
+      "url": "https://bmaf.org.uk/fixtures/",
+      "notes": "UK track, road and indoor championships, mile to 10K only. Masters age groups only.",
+      "howToCheck": "Fixtures page shows 'Entries Full' and 'Advance Notice' statuses. bmaf.opentrack.run errors."
+    },
+    {
+      "id": "night-of-10k-pbs",
+      "name": "Night of the 10,000m PBs",
+      "group": "organiser",
+      "status": "quiet",
+      "url": "https://www.nightofthe10kpbs.com/",
+      "notes": "Not running in 2026. Hopes to return in 2027, no date yet.",
+      "howToCheck": ""
+    },
+    {
+      "id": "top-flight",
+      "name": "Top Flight Races",
+      "group": "organiser",
+      "status": "listing",
+      "url": "https://www.topflightraces.com/",
+      "notes": "Fast 10K series with competitive front waves.",
+      "howToCheck": "Main site has no entry statuses. The OpenTrack org page lists races and entry close dates: https://data.opentrack.run/it/o/GBR/TOPFL/"
+    },
+    {
+      "id": "podium",
+      "name": "Podium",
+      "group": "organiser",
+      "status": "listing",
+      "url": "https://mybestruns.com/Podium5K",
+      "notes": "Graded 5K and mile races. Leicester (Mar 2027) is on the board. A Manchester edition ran for the first time at Tameside Cycle Circuit in Aug 2026.",
+      "howToCheck": "Entries usually open on OpenTrack about three months out. Also watch https://www.sportsshoes.com/store/podium-mcr for Manchester."
+    },
+    {
+      "id": "westminster-mile",
+      "name": "Westminster Mile",
+      "group": "organiser",
+      "status": "new",
+      "url": "https://www.londonmarathonevents.co.uk/westminster-mile",
+      "notes": "Road mile on The Mall, usually late September.",
+      "howToCheck": "Not yet checked. Run by London Marathon Events."
+    },
+    {
+      "id": "assembly-league",
+      "name": "Assembly League",
+      "group": "organiser",
+      "status": "new",
+      "url": "https://www.serpentine.org.uk/race-assembly/",
+      "notes": "Weekday-evening 5K league for London club members, April to September.",
+      "howToCheck": "Not yet checked. Member clubs only; fixtures are posted on club sites such as Serpentine and Dulwich Runners."
+    },
+    {
+      "id": "leeds-abbey-dash",
+      "name": "Leeds Abbey Dash",
+      "group": "course",
+      "status": "listing",
+      "url": "https://www.runforall.com/events/10k/abbey-dash/",
+      "notes": "England Athletics 10K Championships.",
+      "howToCheck": "2027 edition not yet checked."
+    },
+    {
+      "id": "telford-10k",
+      "name": "Telford 10K",
+      "group": "course",
+      "status": "listing",
+      "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928",
+      "notes": "Billed as the UK's fastest 10K course.",
+      "howToCheck": ""
+    },
+    {
+      "id": "trafford-10k",
+      "name": "Trafford 10K",
+      "group": "course",
+      "status": "listing",
+      "url": "https://haid.app/en/events/trafford-10k-2027-mqabgfvz",
+      "notes": "Historically sells out early.",
+      "howToCheck": "Entry status for 2027 unconfirmed. Verify with the organiser."
+    },
+    {
+      "id": "brighton-10k",
+      "name": "Brighton 10K",
+      "group": "course",
+      "status": "listing",
+      "url": "https://runbaseevents.eventrac.co.uk/e/brighton-10k-10764",
+      "notes": "Flat seafront course.",
+      "howToCheck": ""
+    },
+    {
+      "id": "armagh",
+      "name": "Armagh International Road Races",
+      "group": "course",
+      "status": "new",
+      "url": "https://armaghinternationalroadraces.com/",
+      "notes": "Elite-heavy 5K and 3K on a flat circuit in Armagh, usually February.",
+      "howToCheck": "Not yet checked. Older addresses armaghroadrace.com and armagh5k.com may be stale."
+    },
+    {
+      "id": "preston-fast-5",
+      "name": "Preston Fast 5",
+      "group": "course",
+      "status": "new",
+      "url": "https://www.sientries.co.uk/",
+      "notes": "Wednesday-evening 5K series on a flat cycle circuit, split sub-18 and over-18. 2026 series has finished.",
+      "howToCheck": "Not yet checked. Entries via SiEntries (search 'Preston Fast 5'). Organised by Preston Harriers."
+    },
+    {
+      "id": "racecalendar-se",
+      "name": "racecalendar.co.uk (South East)",
+      "group": "listing",
+      "status": "quiet",
+      "url": "https://www.racecalendar.co.uk/locations/south-east/5k",
+      "notes": "5K and 10K listings for the South East.",
+      "howToCheck": "Also check /locations/south-east/10k. Tags include Flat, EA Licensed and Undulating."
+    },
+    {
+      "id": "letsdothis-london-5k",
+      "name": "Let's Do This (London 5K)",
+      "group": "listing",
+      "status": "new",
+      "url": "https://www.letsdothis.com/",
+      "notes": "Large race marketplace.",
+      "howToCheck": "Not yet checked."
+    },
+    {
+      "id": "opentrack",
+      "name": "OpenTrack",
+      "group": "listing",
+      "status": "quiet",
+      "url": "https://data.opentrack.run/",
+      "notes": "Entry platform used by many graded meets.",
+      "howToCheck": "Plain fetches often fail. Search results linking to data.opentrack.run/x/<year>/GBR/<code>/ are the best way to find competition codes."
+    }
+  ]
+}

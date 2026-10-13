@@ -1,0 +1,262 @@
+<title>Race Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a heat-sheet board. Header strip, filter lanes, then one ruled list per status, most urgent first. */
+:root {
+  --bg: #f3f5f6;
+  --surface: #ffffff;
+  --ink: #15191c;
+  --muted: #5d676e;
+  --rule: #d9dfe2;
+  --tartan: #c2402a;      /* track-surface red, the one accent */
+  --tartan-soft: #f6e1dc;
+  --open: #1f6b4f;
+  --open-soft: #dcefe6;
+  --soon: #7a5a00;
+  --soon-soft: #f4ead0;
+  --closed: #6b7378;
+  --closed-soft: #e6eaec;
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111416; --surface: #181c1f; --ink: #e8ecee; --muted: #98a3aa; --rule: #2a3135;
+    --tartan: #ef6a50; --tartan-soft: #3a1f1a; --open: #5fc69a; --open-soft: #173027;
+    --soon: #e0bd5c; --soon-soft: #332b14; --closed: #8d979d; --closed-soft: #23292c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111416; --surface: #181c1f; --ink: #e8ecee; --muted: #98a3aa; --rule: #2a3135;
+  --tartan: #ef6a50; --tartan-soft: #3a1f1a; --open: #5fc69a; --open-soft: #173027;
+  --soon: #e0bd5c; --soon-soft: #332b14; --closed: #8d979d; --closed-soft: #23292c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 860px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 56px; display: grid; gap: 28px; }
+
+header { display: grid; gap: 10px; border-bottom: 3px solid var(--tartan); padding-bottom: 18px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 700; font-size: clamp(40px, 9vw, 64px); line-height: .9; margin: 0; letter-spacing: .01em; text-transform: uppercase; }
+h1 span { color: var(--tartan); }
+.lede { margin: 0; color: var(--muted); max-width: 60ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 500; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 13px/1 var(--body); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:focus-visible, a:focus-visible { outline: 2px solid var(--tartan); outline-offset: 2px; }
+
+section { display: grid; gap: 10px; }
+h2 { font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; margin: 0; display: flex; align-items: baseline; gap: 10px; }
+h2 .count { font-family: var(--mono); font-size: 13px; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+.sec-note { margin: -4px 0 0; color: var(--muted); font-size: 13.5px; }
+
+.list { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+.race { display: grid; grid-template-columns: 76px 1fr; gap: 4px 16px; padding: 14px 16px; border-top: 1px solid var(--rule); }
+.race:first-child { border-top: 0; }
+.date { font-family: var(--mono); font-variant-numeric: tabular-nums; line-height: 1.15; }
+.date .d { font-family: var(--display); font-size: 30px; font-weight: 700; display: block; }
+.date .m { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.body { min-width: 0; display: grid; gap: 4px; }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.name { font-weight: 600; font-size: 16px; color: var(--ink); text-decoration: none; }
+.name:hover { color: var(--tartan); text-decoration: underline; }
+.facts { font-size: 13.5px; color: var(--muted); }
+.why { font-size: 14px; margin: 0; }
+.pill { font: 500 11.5px/1 var(--mono); padding: 5px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.pill.act { background: var(--tartan); color: #fff; }
+.pill.open { background: var(--open-soft); color: var(--open); }
+.pill.announced { background: var(--soon-soft); color: var(--soon); }
+.pill.closed { background: var(--closed-soft); color: var(--closed); }
+.pill.new { background: transparent; color: var(--tartan); border: 1px solid var(--tartan); }
+.clash { font-size: 13px; color: var(--tartan); font-weight: 500; }
+.race.closed .name, .race.closed .date { color: var(--muted); }
+
+.empty { padding: 18px 16px; color: var(--muted); font-size: 14px; }
+.watch { display: flex; flex-wrap: wrap; gap: 8px; }
+.watch a { font-size: 13.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 10px; text-decoration: none; }
+.watch a:hover { border-color: var(--tartan); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+
+@media (max-width: 480px) {
+  .race { grid-template-columns: 56px 1fr; gap: 4px 12px; }
+  .date .d { font-size: 24px; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Fast mile – 10K races · London &amp; SE + UK PB courses</div>
+    <h1>Race <span>Radar</span></h1>
+    <p class="lede">Graded, fast and PB-focused races, checked every morning. Entries for the good ones go quickly, so the most urgent sit at the top.</p>
+    <div class="meta">
+      <span>Last checked: <b id="checked">–</b></span>
+      <span id="newnote"></span>
+    </div>
+  </header>
+
+  <div class="filters" role="group" aria-label="Filter by distance">
+    <button class="chip" id="f-all" data-f="all" aria-pressed="true">All distances</button>
+    <button class="chip" id="f-mile" data-f="mile" aria-pressed="false">Mile / 1500m</button>
+    <button class="chip" id="f-3k" data-f="3k" aria-pressed="false">3000m</button>
+    <button class="chip" id="f-5k" data-f="5k" aria-pressed="false">5K / 5000m</button>
+    <button class="chip" id="f-10k" data-f="10k" aria-pressed="false">10K / 10,000m</button>
+  </div>
+
+  <div id="board"></div>
+
+  <section>
+    <h2>Watching</h2>
+    <p class="sec-note">Organisers checked daily with nothing new announced yet.</p>
+    <div class="watch" id="watch"></div>
+  </section>
+
+  <footer>Updated automatically each morning. Always check the organiser's page before entering. Statuses can change between checks.</footer>
+</div>
+
+<script type="application/json" id="radar-data">
+{
+  "lastChecked": "2026-10-13T15:32:14Z",
+  "races": [
+    {"id": "jarrow-10k-2026", "name": "Jarrow 10K (Top Flight)", "date": "2026-10-18", "venue": "Monkton Stadium, Jarrow", "distances": ["10k"], "status": "act", "statusText": "Entries open · OpenTrack elite/Top Flight entries close Fri 16 Oct", "url": "https://www.runthrough.co.uk/event/jarrow-10k-junior-race-october-2026", "why": "Fast, flat, fully closed-road 10K starting and finishing on the track – part of the Top Flight series.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "fulham-10k-2026", "name": "Fulham 10K (Top Flight)", "date": "2026-11-15", "venue": "Eel Brook Common, London SW6", "distances": ["10k"], "status": "act", "statusText": "Elite (sub-30) free · reduced-fee wave entry", "url": "https://www.topflightraces.com/fulham-10k-2/", "why": "Closed-road, flat London 10K with a competitive front wave. Wave entry via OpenTrack code by email.", "clash": "7 days after Malaga HM (8 Nov)", "firstSeen": "2026-10-05", "updated": "2026-10-05"},
+    {"id": "brighton-10k-2026", "name": "Brighton 10K", "date": "2026-11-15", "venue": "Hove Lawns, Brighton", "distances": ["10k"], "status": "open", "statusText": "Entries open", "url": "https://runbaseevents.eventrac.co.uk/e/brighton-10k-10764", "why": "Flat seafront out-and-back with a quick front end – one of the South East's best 10K PB courses.", "clash": "7 days after Malaga HM (8 Nov)", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "fnul-nov-2026", "name": "Friday Night Under the Lights 5K – November", "date": "2026-11-27", "venue": "Battersea Park, London SW11", "distances": ["5k"], "status": "open", "statusText": "Open to sub-15:30 men / sub-18:00 women (elite races) only", "url": "https://data.opentrack.run/en-gb/x/2026/GBR/fnulnov26/", "why": "Flat two-lap evening 5K in Battersea Park with seeded waves – only the elite races still have places.", "clash": "2 days before target 5K (29 Nov)", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "abbey-dash-2026", "name": "Leeds Abbey Dash", "date": "2026-11-29", "venue": "Leeds", "distances": ["10k"], "status": "open", "statusText": "Entries open · elite closed", "url": "https://www.runforall.com/events/10k/abbey-dash/", "why": "England Athletics 10K Championships – a classic fast course with deep fields.", "clash": "Same day as target 5K (29 Nov)", "firstSeen": "2026-10-05", "updated": "2026-10-05"},
+    {"id": "bmaf-5k-road-2026", "name": "British Masters 5K Road Championships", "date": "2026-11-29", "venue": "Battersea Park, London SW11", "distances": ["5k"], "status": "closed", "statusText": "Entries full", "url": "https://bmaf.org.uk/fixtures/", "why": "BMAF championship 5K on the flat Battersea Park loop – masters age groups only.", "clash": "Same day as target 5K (29 Nov)", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "telford-10k-2026", "name": "Telford 10K", "date": "2026-12-13", "venue": "Telford International Centre", "distances": ["10k"], "status": "act", "statusText": "Waves 2–4 sold out · Wave 1 + elite open", "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928", "why": "Billed as the fastest 10K course in the UK – flat and traffic-free. Mass waves have gone; the fast wave is still open.", "clash": "", "firstSeen": "2026-10-05", "updated": "2026-10-05"},
+    {"id": "ribble-valley-10k-2026", "name": "Ribble Valley 10K (Top Flight Finale)", "date": "2026-12-27", "venue": "Roefield Leisure, Clitheroe", "distances": ["10k"], "status": "open", "statusText": "Entries open · OpenTrack closes 25 Dec", "url": "https://data.opentrack.run/it/o/GBR/TOPFL/", "why": "Top Flight series finale with a competitive front field over the festive period.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "fnul-nye-2026", "name": "FNUL New Year's Eve 5K", "date": "2026-12-31", "venue": "Battersea Park, London SW11", "distances": ["5k"], "status": "announced", "statusText": "Dated · RSVP coming soon", "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php", "why": "Seeded, flat Battersea Park 5K from the FNUL team – a chance to close the year with a PB.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "bmaf-indoor-cardiff-2027", "name": "BMAF Indoor 3000m & Open Events", "date": "2027-01-23", "venue": "National Indoor Athletics Centre, Cardiff", "distances": ["3k"], "status": "announced", "statusText": "Advance notice · entries not open", "url": "https://bmaf.org.uk/fixtures/", "why": "Masters indoor meeting with a 3000m and open track events – masters age groups only.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "bmaf-indoor-champs-2027", "name": "BMAF Indoor Championships", "date": "2027-02-20", "venue": "Glasgow International Arena", "distances": ["mile", "3k"], "status": "announced", "statusText": "Advance notice · entries not open", "url": "https://bmaf.org.uk/fixtures/", "why": "British Masters indoor championships (20–21 Feb), normally including 1500m and 3000m – masters age groups only.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "fnul-feb-2027", "name": "FNUL 5K – February", "date": "2027-02-26", "venue": "Battersea Park, London SW11", "distances": ["5k"], "status": "announced", "statusText": "Dated · RSVP coming soon", "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php", "why": "Seeded evening 5K on a flat two-lap Battersea Park course with waves of up to 85.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "trafford-10k-2027", "name": "Trafford 10K", "date": "2027-03-07", "venue": "Partington, Manchester", "distances": ["10k"], "status": "announced", "statusText": "Dated · entry status unconfirmed – check organiser", "url": "https://haid.app/en/events/trafford-10k-2027-mqabgfvz", "why": "One of the UK's fastest 10K courses with deep club fields – historically sells out.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "fnul-mar-2027", "name": "FNUL 5K – March", "date": "2027-03-12", "venue": "Battersea Park, London SW11", "distances": ["5k"], "status": "announced", "statusText": "Dated · RSVP coming soon", "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php", "why": "Seeded evening 5K on a flat two-lap Battersea Park course with waves of up to 85.", "clash": "", "firstSeen": "2026-10-13", "updated": "2026-10-13"},
+    {"id": "podium-5k-2027", "name": "Podium 5K – Leicester", "date": "2027-03-21", "venue": "New College, Leicester", "distances": ["5k", "mile"], "status": "announced", "statusText": "Date listed · entries not open", "url": "https://mybestruns.com/Podium5K", "why": "Graded 5K and mile races with capped fields. Entries usually open on OpenTrack about three months out and sell out fast.", "clash": "", "firstSeen": "2026-10-05", "updated": "2026-10-05"}
+  ],
+  "watching": [
+    {"name": "Sri Chinmoy Battersea Tuesdays", "url": "https://uk.srichinmoyraces.org/races/london"},
+    {"name": "The Pacers 5000", "url": "https://www.peckhampacers.com/thepacers5000"},
+    {"name": "Friday Night Under the Lights", "url": "https://www.fridaynightunderthelights5k.co.uk/"},
+    {"name": "Tracksmith Twilight 5000", "url": "https://www.tracksmith.com/gb/pages/twilight-5000"},
+    {"name": "British Milers Club", "url": "https://www.britishmilersclub.com/fixtures/"},
+    {"name": "British Masters (BMAF)", "url": "https://bmaf.org.uk/fixtures/"},
+    {"name": "Night of the 10,000m PBs", "url": "https://www.nightofthe10kpbs.com/"},
+    {"name": "Top Flight Races", "url": "https://www.topflightraces.com/"}
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var data;
+  try { data = JSON.parse(document.getElementById('radar-data').textContent); }
+  catch (e) { data = { races: [], watching: [] }; }
+
+  var SECTIONS = [
+    { key: 'act', title: 'Act now', note: 'Entries open and likely to sell out, or opening within a week.' },
+    { key: 'open', title: 'Entries open', note: '' },
+    { key: 'announced', title: 'Announced', note: 'Dated, but entries not open yet.' },
+    { key: 'closed', title: 'Sold out / closed', note: 'Kept here until race day in case a waitlist opens.' }
+  ];
+  var PILL = { act: 'Act now', open: 'Open', announced: 'Coming', closed: 'Closed' };
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  // Per-viewer "new since last visit" marker (convenience only).
+  var lastVisit = null;
+  try { lastVisit = localStorage.getItem('rr-last-visit'); } catch (e) {}
+  try { localStorage.setItem('rr-last-visit', new Date().toISOString().slice(0, 10)); } catch (e) {}
+  var filter = 'all';
+  try { filter = localStorage.getItem('rr-filter') || 'all'; } catch (e) {}
+
+  var today = new Date().toISOString().slice(0, 10);
+  var races = (data.races || []).filter(function (r) { return !r.date || r.date >= today; });
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function isNew(r) { return lastVisit ? (r.updated || '') > lastVisit : false; }
+  function matches(r) { return filter === 'all' || (r.distances || []).indexOf(filter) !== -1; }
+
+  function render() {
+    var board = document.getElementById('board');
+    board.textContent = '';
+    var newCount = 0;
+    SECTIONS.forEach(function (s) {
+      var items = races.filter(function (r) { return r.status === s.key && matches(r); })
+        .sort(function (a, b) { return (a.date || '9999').localeCompare(b.date || '9999'); });
+      if (!items.length && s.key === 'closed') return;
+      var sec = el('section');
+      var h = el('h2', null, s.title);
+      h.appendChild(el('span', 'count', String(items.length)));
+      sec.appendChild(h);
+      if (s.note) sec.appendChild(el('p', 'sec-note', s.note));
+      var ul = el('ul', 'list');
+      if (!items.length) ul.appendChild(el('li', 'empty', 'Nothing here right now.'));
+      items.forEach(function (r) {
+        var li = el('li', 'race' + (r.status === 'closed' ? ' closed' : ''));
+        var d = el('div', 'date');
+        if (r.date) {
+          var dt = new Date(r.date + 'T12:00:00Z');
+          d.appendChild(el('span', 'd', String(dt.getUTCDate())));
+          d.appendChild(el('span', 'm', MONTHS[dt.getUTCMonth()] + ' ' + String(dt.getUTCFullYear()).slice(2)));
+          d.appendChild(el('span', 'm', DAYS[dt.getUTCDay()]));
+        } else d.appendChild(el('span', 'm', 'TBC'));
+        li.appendChild(d);
+        var b = el('div', 'body');
+        var top = el('div', 'top');
+        var a = el('a', 'name', r.name);
+        a.href = r.url; a.target = '_blank'; a.rel = 'noopener';
+        top.appendChild(a);
+        top.appendChild(el('span', 'pill ' + r.status, PILL[r.status] || r.status));
+        if (isNew(r)) { top.appendChild(el('span', 'pill new', 'New')); newCount++; }
+        b.appendChild(top);
+        b.appendChild(el('div', 'facts', [r.venue, (r.distances || []).map(function (x) { return x === 'mile' ? 'Mile' : x.toUpperCase(); }).join(' · '), r.statusText].filter(Boolean).join(' — ')));
+        if (r.why) b.appendChild(el('p', 'why', r.why));
+        if (r.clash) b.appendChild(el('div', 'clash', '⚠ Clash: ' + r.clash));
+        li.appendChild(b);
+        ul.appendChild(li);
+      });
+      sec.appendChild(ul);
+      board.appendChild(sec);
+    });
+    var nn = document.getElementById('newnote');
+    nn.textContent = newCount ? newCount + ' updated since your last visit' : '';
+  }
+
+  if (data.lastChecked) {
+    var c = new Date(data.lastChecked);
+    document.getElementById('checked').textContent =
+      DAYS[c.getDay()] + ' ' + c.getDate() + ' ' + MONTHS[c.getMonth()] + ', ' +
+      String(c.getHours()).padStart(2, '0') + ':' + String(c.getMinutes()).padStart(2, '0');
+  }
+
+  var w = document.getElementById('watch');
+  (data.watching || []).forEach(function (x) {
+    var a = el('a', null, x.name); a.href = x.url; a.target = '_blank'; a.rel = 'noopener'; w.appendChild(a);
+  });
+
+  document.querySelectorAll('.chip').forEach(function (btn) {
+    btn.setAttribute('aria-pressed', String(btn.dataset.f === filter));
+    btn.addEventListener('click', function () {
+      filter = btn.dataset.f;
+      try { localStorage.setItem('rr-filter', filter); } catch (e) {}
+      document.querySelectorAll('.chip').forEach(function (o) { o.setAttribute('aria-pressed', String(o === btn)); });
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

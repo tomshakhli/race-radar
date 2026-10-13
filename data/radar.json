@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-13T19:52:44Z",
+  "lastChecked": "2026-10-13T20:15:29Z",
   "races": [
     {
       "id": "jarrow-10k-2026",
@@ -13,6 +13,21 @@
       "statusText": "Entries open · OpenTrack elite/Top Flight entries close Fri 16 Oct",
       "url": "https://www.runthrough.co.uk/event/jarrow-10k-junior-race-october-2026",
       "why": "Fast, flat, fully closed-road 10K starting and finishing on the track – part of the Top Flight series.",
+      "firstSeen": "2026-10-13",
+      "updated": "2026-10-13"
+    },
+    {
+      "id": "serpentine-lfotm-5k-2026",
+      "name": "Serpentine Last Friday of the Month 5K – October",
+      "date": "2026-10-30",
+      "venue": "The Boathouse, Hyde Park, London W2",
+      "distances": [
+        "5k"
+      ],
+      "status": "open",
+      "statusText": "Online entry only · £7 affiliated / £9 unaffiliated · usually sells out a week before",
+      "url": "https://serpentinertc.eventrac.co.uk/e/last-friday-of-the-month-5k-14056",
+      "why": "Lunchtime two-lap 5K on a flat Hyde Park course run by Serpentine RTC – an easy central London PB chance.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
     },
@@ -148,6 +163,21 @@
       "statusText": "Advance notice · entries not open",
       "url": "https://bmaf.org.uk/fixtures/",
       "why": "Masters indoor meeting with a 3000m and open track events – masters age groups only.",
+      "firstSeen": "2026-10-13",
+      "updated": "2026-10-13"
+    },
+    {
+      "id": "armagh-5k-2027",
+      "name": "Armagh International 5K",
+      "date": "2027-02-11",
+      "venue": "The Mall, Armagh, Northern Ireland",
+      "distances": [
+        "5k"
+      ],
+      "status": "announced",
+      "statusText": "Dated · entry by application, not open registration",
+      "url": "https://mybestruns.com/Armagh5K",
+      "why": "Elite-heavy flat 5K circuit billed as one of the world's fastest road races, with a 3K alongside. Entry is restricted, so check how to apply before planning.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
     },

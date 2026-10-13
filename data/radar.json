@@ -102,11 +102,13 @@
         "5k"
       ],
       "status": "closed",
-      "statusText": "Entries full",
+      "statusText": "Entries full · waiting list by email",
       "url": "https://bmaf.org.uk/fixtures/",
       "why": "BMAF championship 5K on the flat Battersea Park loop – masters age groups only.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-10-13",
+      "contactEmail": "ben@bennoadcoaching.com",
+      "contactLabel": "Waiting list"
     },
     {
       "id": "telford-10k-2026",

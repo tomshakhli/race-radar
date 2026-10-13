@@ -1,0 +1,110 @@
+name: Race Radar
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC daily (07:00 BST)
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: race-radar
+  cancel-in-progress: false
+
+jobs:
+  research:
+    # Push events only redeploy; the agent runs on the schedule or by hand.
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Snapshot current data
+        run: cp data/radar.json "$RUNNER_TEMP/prev.json"
+
+      - name: Research (Claude Code, headless)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude -p "$(cat prompts/daily.md)" \
+            --model "${{ vars.RADAR_MODEL || 'claude-sonnet-5-5' }}" \
+            --max-turns 80 \
+            --allowedTools "Read,Glob,Grep,WebSearch,WebFetch,Edit(data/radar.json),Edit(config/sources.json),Write(data/radar.json),Write(config/sources.json)" \
+            | tee "$RUNNER_TEMP/agent.txt"
+
+      - name: Finalize (validate, clashes, timestamps, diff)
+        run: python3 scripts/radar.py finalize --prev "$RUNNER_TEMP/prev.json" --changes "$RUNNER_TEMP/changes.txt"
+
+      - name: Validate and test
+        run: |
+          python3 scripts/radar.py validate
+          python3 -m unittest discover -s tests
+
+      - name: Commit
+        run: |
+          git config user.name "race-radar-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/radar.json config/sources.json
+          git diff --cached --quiet || git commit -m "Daily radar update $(date -u +%F)"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Changes"; echo '```'; cat "$RUNNER_TEMP/changes.txt" 2>/dev/null || echo "(none)"; echo '```'
+            echo "## Agent notes"; echo '```'; tail -c 4000 "$RUNNER_TEMP/agent.txt" 2>/dev/null || true; echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify (ntfy)
+        if: always()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          [ -n "$NTFY_TOPIC" ] || exit 0
+          if [ "$JOB_STATUS" = "success" ]; then
+            curl -s -H "Title: Race Radar" -H "Click: https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/" \
+              --data-binary @"$RUNNER_TEMP/changes.txt" "https://ntfy.sh/$NTFY_TOPIC"
+          else
+            curl -s -H "Title: Race Radar run failed" -H "Priority: high" \
+              -d "See $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" "https://ntfy.sh/$NTFY_TOPIC"
+          fi
+
+  deploy:
+    needs: research
+    if: always() && (needs.research.result == 'success' || needs.research.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}   # pick up the commit the research job just pushed
+
+      - name: Validate, test, build
+        run: |
+          python3 scripts/radar.py validate
+          python3 -m unittest discover -s tests
+          python3 scripts/radar.py build --out dist
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

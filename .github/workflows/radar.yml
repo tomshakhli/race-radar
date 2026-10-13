@@ -44,7 +44,7 @@ jobs:
           claude -p "$(cat prompts/daily.md)" \
             --model "${{ vars.RADAR_MODEL || 'claude-haiku-5-5' }}" \
             --max-turns 80 \
-            --allowedTools "Read,Glob,Grep,WebSearch,WebFetch,Edit(data/radar.json),Edit(config/sources.json),Write(data/radar.json),Write(config/sources.json)" \
+            --allowedTools "Read,Glob,Grep,WebSearch,WebFetch,Bash(python3 scripts/page_emails.py:*),Edit(data/radar.json),Edit(config/sources.json),Write(data/radar.json),Write(config/sources.json)" \
             | tee "$RUNNER_TEMP/agent.txt"
 
       - name: Finalize (validate, clashes, timestamps, diff)

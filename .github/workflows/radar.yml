@@ -2,7 +2,7 @@ name: Race Radar
 
 on:
   schedule:
-    - cron: "0 6 * * 1-5"   # 06:00 UTC Mon, Wed, Fri (07:00 BST)
+    - cron: "17 5 * * 1-5"   # 06:00 UTC Mon, Wed, Fri (07:00 BST)
   workflow_dispatch:
   push:
     branches: [main]

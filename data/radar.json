@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-13T20:52:52Z",
+  "lastChecked": "2026-10-14T09:40:29Z",
   "races": [
     {
       "id": "jarrow-10k-2026",
@@ -186,6 +186,21 @@
       "why": "Elite-heavy flat 5K circuit billed as one of the world's fastest road races, with a 3K alongside. Entry is restricted, so check how to apply before planning.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
+    },
+    {
+      "id": "hampton-court-half-2027",
+      "name": "Hampton Court Half Marathon 2027",
+      "date": "2027-02-14",
+      "venue": "Hampton Court, Thames riverside",
+      "distances": [
+        "half"
+      ],
+      "status": "open",
+      "statusText": "Early-bird entries open until end Oct · pacers · measured flat course",
+      "url": "https://runabc.co.uk/hampton-court-half-marathon",
+      "why": "Predominantly flat Thames-side half, measured by an Olympic course measurer, with pacers and a 1:08:49 course record.",
+      "firstSeen": "2026-10-14",
+      "updated": "2026-10-14"
     },
     {
       "id": "bmaf-indoor-champs-2027",

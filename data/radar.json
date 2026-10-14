@@ -144,18 +144,21 @@
     },
     {
       "id": "fnul-nye-2026",
-      "name": "FNUL New Year's Eve 5K",
+      "name": "FNUL x Podium x On New Year's Eve 5K & Mile",
       "date": "2026-12-31",
-      "venue": "Battersea Park, London SW11",
+      "venue": "Battersea Park Millennium Arena, London SW11",
       "distances": [
-        "5k"
+        "5k",
+        "mile"
       ],
-      "status": "announced",
-      "statusText": "Dated · RSVP coming soon",
-      "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php",
-      "why": "Seeded, flat Battersea Park 5K from the FNUL team – a chance to close the year with a PB.",
+      "status": "closed",
+      "statusText": "Sold out on OpenTrack · waiting list by email (5K standard sub-17:00 men / sub-19:30 women; mile sub-7:30)",
+      "url": "https://data.opentrack.run/en-gb/x/2026/GBR/fnulonpod/",
+      "why": "Flat, fast Battersea Park 5K plus an open mile on New Year's Eve, chip-timed with seeded races and elite fields.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-10-14",
+      "contactEmail": "ben@bennoadcoaching.com",
+      "contactLabel": "Waiting list"
     },
     {
       "id": "bmaf-indoor-cardiff-2027",

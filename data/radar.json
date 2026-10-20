@@ -1,21 +1,6 @@
 {
-  "lastChecked": "2026-10-16T05:28:27Z",
+  "lastChecked": "2026-10-20T05:28:58Z",
   "races": [
-    {
-      "id": "jarrow-10k-2026",
-      "name": "Jarrow 10K (Top Flight)",
-      "date": "2026-10-18",
-      "venue": "Monkton Stadium, Jarrow",
-      "distances": [
-        "10k"
-      ],
-      "status": "act",
-      "statusText": "Entries open · OpenTrack elite/Top Flight entries close Fri 16 Oct",
-      "url": "https://www.runthrough.co.uk/event/jarrow-10k-junior-race-october-2026",
-      "why": "Fast, flat, fully closed-road 10K starting and finishing on the track – part of the Top Flight series.",
-      "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
-    },
     {
       "id": "serpentine-lfotm-5k-2026",
       "name": "Serpentine Last Friday of the Month 5K – October",

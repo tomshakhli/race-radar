@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-26T05:36:49Z",
+  "lastChecked": "2026-10-27T05:30:50Z",
   "races": [
     {
       "id": "serpentine-lfotm-5k-2026",
@@ -311,6 +311,21 @@
       "why": "Central London road mile on The Mall with a BMC wave for fast runners.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
+    },
+    {
+      "id": "fnul-nye-2027",
+      "name": "FNUL New Year's Eve 5K 2027",
+      "date": "2027-12-31",
+      "venue": "Battersea Park, London SW11",
+      "distances": [
+        "5k"
+      ],
+      "status": "announced",
+      "statusText": "Dated · entries coming soon",
+      "url": "https://www.fridaynightunderthelights5k.co.uk/event-details.php",
+      "why": "Seeded New Year's Eve 5K on the flat two-lap Battersea Park course, the same format as the FNUL series.",
+      "firstSeen": "2026-10-27",
+      "updated": "2026-10-27"
     }
   ]
 }

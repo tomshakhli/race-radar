@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-10-29T05:23:51Z",
+  "lastChecked": "2026-10-30T05:24:07Z",
   "races": [
     {
       "id": "serpentine-lfotm-5k-2026",
@@ -296,6 +296,21 @@
       "why": "Chip-timed riverside half through Ham and Richmond to Kingston Bridge and back, a short trip from south London.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
+    },
+    {
+      "id": "ranelagh-10k-2027",
+      "name": "Ranelagh 10K",
+      "date": "2027-05-30",
+      "venue": "Riverside Drive Open Space, Richmond",
+      "distances": [
+        "10k"
+      ],
+      "status": "announced",
+      "statusText": "Dated · entries opening soon",
+      "url": "https://ranelagh-harriers.co.uk/ranelagh-10k",
+      "why": "Flat two-lap, chip-timed 10K along the Thames towpath through Ham, run by Richmond club Ranelagh Harriers.",
+      "firstSeen": "2026-10-30",
+      "updated": "2026-10-30"
     },
     {
       "id": "westminster-mile-2027",

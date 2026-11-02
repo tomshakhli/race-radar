@@ -1,21 +1,6 @@
 {
-  "lastChecked": "2026-10-30T05:24:07Z",
+  "lastChecked": "2026-11-02T05:21:59Z",
   "races": [
-    {
-      "id": "serpentine-lfotm-5k-2026",
-      "name": "Serpentine Last Friday of the Month 5K – October",
-      "date": "2026-10-30",
-      "venue": "The Boathouse, Hyde Park, London W2",
-      "distances": [
-        "5k"
-      ],
-      "status": "act",
-      "statusText": "Online entry only · £7 affiliated / £9 unaffiliated · usually sells out a week before",
-      "url": "https://serpentinertc.eventrac.co.uk/e/last-friday-of-the-month-5k-14056",
-      "why": "Lunchtime two-lap 5K on a flat Hyde Park course run by Serpentine RTC – an easy central London PB chance.",
-      "firstSeen": "2026-10-13",
-      "updated": "2026-10-22"
-    },
     {
       "id": "brighton-10k-2026",
       "name": "Brighton 10K",
@@ -62,6 +47,21 @@
       "updated": "2026-10-13",
       "contactEmail": "ben@bennoadcoaching.com",
       "contactLabel": "Elite races (sub-14:00 men / sub-16:10 women)"
+    },
+    {
+      "id": "serpentine-lfotm-5k-nov-2026",
+      "name": "Serpentine Last Friday of the Month 5K – November",
+      "date": "2026-11-27",
+      "venue": "The Boathouse, Hyde Park, London W2",
+      "distances": [
+        "5k"
+      ],
+      "status": "open",
+      "statusText": "Online entry only · usually sells out a week before",
+      "url": "https://serpentinertc.eventrac.co.uk/e/last-friday-of-the-month-5k-14056",
+      "why": "Lunchtime two-lap 5K on a flat Hyde Park course run by Serpentine RTC – an easy central London PB chance.",
+      "firstSeen": "2026-11-02",
+      "updated": "2026-11-02"
     },
     {
       "id": "abbey-dash-2026",
@@ -153,12 +153,12 @@
       "distances": [
         "3k"
       ],
-      "status": "announced",
-      "statusText": "Advance notice · entries not open",
+      "status": "open",
+      "statusText": "Entries open via OpenTrack · 3000m and open events",
       "url": "https://bmaf.org.uk/fixtures/",
       "why": "Masters indoor meeting with a 3000m and open track events – masters age groups only.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-11-02"
     },
     {
       "id": "armagh-5k-2027",
@@ -184,11 +184,11 @@
         "half"
       ],
       "status": "open",
-      "statusText": "Early-bird entries open until end Oct · pacers · measured flat course",
+      "statusText": "Entries open · pacers · measured flat course",
       "url": "https://runabc.co.uk/hampton-court-half-marathon",
       "why": "Predominantly flat Thames-side half, measured by an Olympic course measurer, with pacers and a 1:08:49 course record.",
       "firstSeen": "2026-10-14",
-      "updated": "2026-10-14"
+      "updated": "2026-11-02"
     },
     {
       "id": "bmaf-indoor-champs-2027",

@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-02T05:21:59Z",
+  "lastChecked": "2026-11-03T05:20:36Z",
   "races": [
     {
       "id": "brighton-10k-2026",
@@ -168,12 +168,12 @@
       "distances": [
         "5k"
       ],
-      "status": "announced",
-      "statusText": "Dated · entry by application, not open registration",
+      "status": "act",
+      "statusText": "Applications close 8 Nov · entry by application, sub-16 5K proof",
       "url": "https://mybestruns.com/Armagh5K",
       "why": "Elite-heavy flat 5K circuit billed as one of the world's fastest road races, with a 3K alongside. Entry is restricted, so check how to apply before planning.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-11-03"
     },
     {
       "id": "hampton-court-half-2027",

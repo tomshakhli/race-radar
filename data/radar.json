@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-09T05:23:01Z",
+  "lastChecked": "2026-11-10T05:22:44Z",
   "races": [
     {
       "id": "brighton-10k-2026",
@@ -9,12 +9,12 @@
       "distances": [
         "10k"
       ],
-      "status": "open",
+      "status": "act",
       "statusText": "Entries open",
       "url": "https://runbaseevents.eventrac.co.uk/e/brighton-10k-10764",
       "why": "Flat seafront out-and-back with a quick front end – one of the South East's best 10K PB courses.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-11-10"
     },
     {
       "id": "fulham-10k-2026",

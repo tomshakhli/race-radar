@@ -1,36 +1,6 @@
 {
-  "lastChecked": "2026-11-13T05:20:53Z",
+  "lastChecked": "2026-11-16T05:22:48Z",
   "races": [
-    {
-      "id": "brighton-10k-2026",
-      "name": "Brighton 10K",
-      "date": "2026-11-15",
-      "venue": "Hove Lawns, Brighton",
-      "distances": [
-        "10k"
-      ],
-      "status": "act",
-      "statusText": "Entries open",
-      "url": "https://runbaseevents.eventrac.co.uk/e/brighton-10k-10764",
-      "why": "Flat seafront out-and-back with a quick front end – one of the South East's best 10K PB courses.",
-      "firstSeen": "2026-10-13",
-      "updated": "2026-11-10"
-    },
-    {
-      "id": "fulham-10k-2026",
-      "name": "Fulham 10K (Top Flight)",
-      "date": "2026-11-15",
-      "venue": "Eel Brook Common, London SW6",
-      "distances": [
-        "10k"
-      ],
-      "status": "act",
-      "statusText": "Elite (sub-30) free · reduced-fee wave entry",
-      "url": "https://www.topflightraces.com/fulham-10k-2/",
-      "why": "Closed-road, flat London 10K with a competitive front wave. Wave entry via OpenTrack code by email.",
-      "firstSeen": "2026-10-05",
-      "updated": "2026-10-05"
-    },
     {
       "id": "fnul-nov-2026",
       "name": "Friday Night Under the Lights 5K – November",
@@ -56,12 +26,12 @@
       "distances": [
         "5k"
       ],
-      "status": "open",
+      "status": "act",
       "statusText": "Online entry only · usually sells out a week before",
       "url": "https://serpentinertc.eventrac.co.uk/e/last-friday-of-the-month-5k-14056",
       "why": "Lunchtime two-lap 5K on a flat Hyde Park course run by Serpentine RTC – an easy central London PB chance.",
       "firstSeen": "2026-11-02",
-      "updated": "2026-11-02"
+      "updated": "2026-11-16"
     },
     {
       "id": "abbey-dash-2026",

@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-16T05:22:48Z",
+  "lastChecked": "2026-11-17T05:20:53Z",
   "races": [
     {
       "id": "fnul-nov-2026",
@@ -74,11 +74,11 @@
         "10k"
       ],
       "status": "act",
-      "statusText": "Waves 2–4 sold out · Wave 1 + elite open",
+      "statusText": "Waves 3–4 sold out · Waves 1–2 + elite open",
       "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928",
       "why": "Billed as the fastest 10K course in the UK – flat and traffic-free. Mass waves have gone; the fast wave is still open.",
       "firstSeen": "2026-10-05",
-      "updated": "2026-10-05",
+      "updated": "2026-11-17",
       "contactEmail": "telford10k@yahoo.co.uk",
       "contactLabel": "Elite entries (sub-30:30 men / sub-35:00 women)"
     },

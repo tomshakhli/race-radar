@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-17T05:20:53Z",
+  "lastChecked": "2026-11-18T05:21:08Z",
   "races": [
     {
       "id": "fnul-nov-2026",
@@ -74,11 +74,11 @@
         "10k"
       ],
       "status": "act",
-      "statusText": "Waves 3–4 sold out · Waves 1–2 + elite open",
+      "statusText": "Wave 1 + elite open · waves 2–4 closed · no waiting list",
       "url": "https://www.atwevents.co.uk/e/telford-10k-2026-9928",
       "why": "Billed as the fastest 10K course in the UK – flat and traffic-free. Mass waves have gone; the fast wave is still open.",
       "firstSeen": "2026-10-05",
-      "updated": "2026-11-17",
+      "updated": "2026-11-18",
       "contactEmail": "telford10k@yahoo.co.uk",
       "contactLabel": "Elite entries (sub-30:30 men / sub-35:00 women)"
     },
@@ -199,12 +199,14 @@
       "distances": [
         "10k"
       ],
-      "status": "open",
-      "statusText": "Entries open · £28 club / £30 non-club · historically sells out early",
-      "url": "https://haid.app/en/events/trafford-10k-2027-mqabgfvz",
+      "status": "closed",
+      "statusText": "Sold out · no waiting list · elite entry by email",
+      "url": "https://www.runnorthwest.co.uk/pages/trafford-10k-2027",
       "why": "One of the UK's fastest 10K courses with deep club fields – historically sells out.",
       "firstSeen": "2026-10-13",
-      "updated": "2026-10-13"
+      "updated": "2026-11-18",
+      "contactEmail": "run@runnorthwest.co.uk",
+      "contactLabel": "Elite entries (sub-29:45 men / sub-34:00 women 10K)"
     },
     {
       "id": "fnul-mar-2027",

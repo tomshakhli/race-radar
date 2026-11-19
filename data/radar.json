@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-18T05:21:08Z",
+  "lastChecked": "2026-11-19T05:21:47Z",
   "races": [
     {
       "id": "fnul-nov-2026",
@@ -144,6 +144,22 @@
       "why": "Elite-heavy flat 5K circuit billed as one of the world's fastest road races, with a 3K alongside. Entry is restricted, so check how to apply before planning.",
       "firstSeen": "2026-10-13",
       "updated": "2026-11-09"
+    },
+    {
+      "id": "bmc-lee-valley-indoor-2027",
+      "name": "British Milers Club Indoor – Lee Valley",
+      "date": "2027-02-13",
+      "venue": "Lee Valley Leisure Complex, London",
+      "distances": [
+        "mile",
+        "3k"
+      ],
+      "status": "open",
+      "statusText": "Entries open to members and non-members · 1500m and 3000m",
+      "url": "https://www.britishmilersclub.com/meeting-category/bmc-indoors",
+      "why": "British Milers Club indoor meet in east London with 1500m and 3000m races, open to non-members too.",
+      "firstSeen": "2026-11-19",
+      "updated": "2026-11-19"
     },
     {
       "id": "hampton-court-half-2027",

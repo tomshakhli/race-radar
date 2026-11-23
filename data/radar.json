@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-20T05:21:05Z",
+  "lastChecked": "2026-11-23T05:28:15Z",
   "races": [
     {
       "id": "fnul-nov-2026",
@@ -41,12 +41,12 @@
       "distances": [
         "10k"
       ],
-      "status": "open",
-      "statusText": "Entries open · elite closed",
+      "status": "closed",
+      "statusText": "Sold out · elite applications closed",
       "url": "https://www.runforall.com/events/10k/abbey-dash/",
       "why": "England Athletics 10K Championships – a classic fast course with deep fields.",
       "firstSeen": "2026-10-05",
-      "updated": "2026-10-05"
+      "updated": "2026-11-23"
     },
     {
       "id": "bmaf-5k-road-2026",

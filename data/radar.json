@@ -1,5 +1,5 @@
 {
-  "lastChecked": "2026-11-25T05:22:50Z",
+  "lastChecked": "2026-11-26T05:22:23Z",
   "races": [
     {
       "id": "fnul-nov-2026",
@@ -314,6 +314,21 @@
       "why": "Central London road mile on The Mall with a BMC wave for fast runners.",
       "firstSeen": "2026-10-13",
       "updated": "2026-10-13"
+    },
+    {
+      "id": "kingston-half-2027",
+      "name": "Kingston Half Marathon 2027",
+      "date": "2027-10-03",
+      "venue": "Kingston upon Thames, riverside past Hampton Court Palace",
+      "distances": [
+        "half"
+      ],
+      "status": "open",
+      "statusText": "Entries open · early bird to 31 Jan · UKA measured · pacers",
+      "url": "https://riverthamesrunning.co.uk/kingston-half/kingston-half-marathon/",
+      "why": "Flat, UKA-measured riverside half in Kingston with pacers, a short trip from south London.",
+      "firstSeen": "2026-11-26",
+      "updated": "2026-11-26"
     },
     {
       "id": "fnul-nye-2027",
